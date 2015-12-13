@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">TodayHistory</string>
+  <string name="title_activity_today">TodayActivity</string>
 </resources>
