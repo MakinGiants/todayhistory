@@ -2,6 +2,8 @@ app/gradle.properties
 app/newrelic.properties
 captures/
 
+com_crashlytics_export_strings.xml
+
 # Created by https://www.gitignore.io
 
 ### Android ###
