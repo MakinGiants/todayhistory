@@ -1,10 +1,10 @@
-package com.makingiants.today.todayhistory;
+package com.makingiants.todayhistory;
 
 import android.app.Application;
 import android.os.Build;
 import com.makingiants.today.api.Api;
-import com.makingiants.today.todayhistory.utils.log.CrashlyticsTree;
-import com.makingiants.today.todayhistory.utils.log.DebugTree;
+import com.makingiants.todayhistory.utils.log.CrashlyticsTree;
+import com.makingiants.todayhistory.utils.log.DebugTree;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import timber.log.Timber;

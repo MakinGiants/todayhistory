@@ -3,7 +3,7 @@ package com.makingiants.today.api.error_handling;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
-import android.text.TextUtils;
+import com.makingiants.today.api.utils.TextUtils;
 
 /**
  * Api Error representation.

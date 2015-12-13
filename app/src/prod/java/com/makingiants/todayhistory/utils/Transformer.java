@@ -1,4 +1,4 @@
-package com.makingiants.today.todayhistory.utils;
+package com.makingiants.todayhistory.utils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;

@@ -1,4 +1,4 @@
-package com.makingiants.today.todayhistory.utils.log;
+package com.makingiants.todayhistory.utils.log;
 
 import timber.log.Timber;
 

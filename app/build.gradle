@@ -12,13 +12,12 @@ buildscript {
   }
 }
 
-
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
 
-def appId = "com.makingiants.today.todayhistory"
+def appId = "com.makingiants.todayhistory"
 def appVersionName = "0.1.0"
 def appVersionCode = 1
 
@@ -45,9 +44,8 @@ android {
     buildConfigField "boolean", "ANALYTICS_ENABLED", "false"
   }
   buildTypes {
-    debud {
-      minifyEnabled true
-      shrinkResources true
+    debug {
+      minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     release {
@@ -57,6 +55,19 @@ android {
 
       buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
       buildConfigField "boolean", "ANALYTICS_ENABLED", "true"
+    }
+  }
+
+  productFlavors {
+    prod
+    mocked
+  }
+  testOptions {
+    unitTests.all {
+      jvmArgs "-XX:MaxPermSize=2048m"
+
+      beforeTest { descriptor -> logger.lifecycle("Running test: " + descriptor)
+      }
     }
   }
 
@@ -77,6 +88,7 @@ repositories {
 }
 
 dependencies {
+  compile project(':api')
   compile rootProject.deps.appCompatV7
   compile "com.android.support:design:${rootProject.supportLibVersion}"
 
@@ -84,7 +96,9 @@ dependencies {
   compile 'com.jakewharton.timber:timber:4.1.0@aar'
   compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 
-  compile project(':api')
-
   testCompile 'junit:junit:4.12'
+  testCompile "org.mockito:mockito-core:1.10.19"
+  testCompile('com.squareup.assertj:assertj-android:1.1.1') {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  }
 }

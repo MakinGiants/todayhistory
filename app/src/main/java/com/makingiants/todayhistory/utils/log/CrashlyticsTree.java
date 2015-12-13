@@ -1,11 +1,11 @@
-package com.makingiants.today.todayhistory.utils.log;
+package com.makingiants.todayhistory.utils.log;
 
 import android.content.Context;
 import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
-import com.makingiants.today.todayhistory.BuildConfig;
+import com.makingiants.todayhistory.BuildConfig;
 import io.fabric.sdk.android.Fabric;
 import java.util.Map;
 import timber.log.Timber;

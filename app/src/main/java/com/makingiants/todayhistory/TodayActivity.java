@@ -1,4 +1,4 @@
-package com.makingiants.today.todayhistory;
+package com.makingiants.todayhistory;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
-import com.makingiants.today.todayhistory.utils.Transformer;
+import com.makingiants.todayhistory.utils.Transformer;
 
 public class TodayActivity extends AppCompatActivity {
 
