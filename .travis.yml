@@ -5,6 +5,7 @@ android:
     - 'android-sdk-license-.+'
 
   components:
+    - tools
     - build-tools-23.0.2
     - android-23
     - extra-android-support
