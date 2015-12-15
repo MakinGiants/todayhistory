@@ -1,0 +1,24 @@
+language: android
+
+android:
+  licenses:
+    - 'android-sdk-license-.+'
+
+  components:
+    - build-tools-23.0.2
+    - android-23
+    - extra-android-support
+    - extra-android-m2repository
+
+before_install:
+    - chmod +x gradlew
+
+script:
+    - ./gradlew test --stacktrace
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/

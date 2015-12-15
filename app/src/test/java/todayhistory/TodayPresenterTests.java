@@ -52,9 +52,6 @@ public class TodayPresenterTests {
     when(mockedDateManager.getTodayDay()).thenReturn(1);
     when(mockedDateManager.getTodayMonth()).thenReturn(10);
 
-    presenter.onCreate(mockedView);
-
-    verify(mockedRepository).get(1, 10);
     verify(mockedView).showProgress();
     verify(mockedView).dismissProgress();
     verify(mockedView).showEvents(events);
