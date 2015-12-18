@@ -6,7 +6,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'me.tatarka:gradle-retrolambda:3.2.3'
+    classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta3'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
     classpath 'io.fabric.tools:gradle:1.21.2'
   }
@@ -39,7 +39,7 @@ android {
     // Add version and build number to apk name
     setProperty("archivesBaseName", "today-${appVersionName}-${appVersionCode}")
 
-    buildConfigField "String", "HOST", "\"http://demo8732721.mockable.io\""
+    buildConfigField "String", "HOST", "\"http://day-in-history.herokuapp.com\""
     buildConfigField "String", "GIT_SHA", "\"STATIC_FOR_PERFORMANCE\""
     buildConfigField "boolean", "ANALYTICS_ENABLED", "false"
   }
@@ -91,6 +91,8 @@ dependencies {
   compile project(':api')
   compile rootProject.deps.appCompatV7
   compile "com.android.support:design:${rootProject.supportLibVersion}"
+
+  compile 'com.jakewharton:butterknife:7.0.1'
 
   // Management
   compile 'com.jakewharton.timber:timber:4.1.0@aar'

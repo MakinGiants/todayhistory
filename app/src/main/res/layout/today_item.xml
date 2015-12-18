@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="68dp"
+  android:layout_marginEnd="@dimen/margin_activity_horizontal"
+  android:layout_marginLeft="@dimen/spacing_medium"
+  android:layout_marginRight="@dimen/margin_activity_horizontal"
+  android:layout_marginStart="@dimen/spacing_medium"
+  android:orientation="vertical">
+
+  <TextView
+    android:id="@+id/item_today_text_title"
+    style="@style/TextAppearance.AppCompat.Body2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:textColor="@android:color/darker_gray"
+    tools:text="This is a really big songIndex name big big big big big big big big big 123" />
+
+  <TextView
+    android:id="@+id/item_today_text_date"
+    style="@style/TextAppearance.AppCompat.Caption"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:textColor="@android:color/darker_gray"
+    tools:text="This is a really big artist name big big big big big big big big big 123" />
+
+
+</LinearLayout>

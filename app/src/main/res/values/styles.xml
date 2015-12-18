@@ -6,6 +6,11 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+  <style name="Toolbar.ThemeOverlay" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item name="android:background">@color/colorPrimary</item>
+    <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+  </style>
+
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -1,4 +1,4 @@
-package todayhistory.api;
+package com.makingiants.todayhistory.api;
 
 import com.makingiants.today.api.repository.history.pojo.Event;
 import java.util.ArrayList;

@@ -14,9 +14,8 @@
     android:theme="@style/AppTheme">
 
     <activity
-      android:name=".TodayActivity"
-      android:label="@string/title_activity_today"
-      android:theme="@style/AppTheme">
+      android:name=".today.TodayActivity"
+      android:label="@string/title_activity_today">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 

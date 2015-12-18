@@ -1,4 +1,4 @@
-package todayhistory.api.error_handling;
+package com.makingiants.todayhistory.api.error_handling;
 
 import com.makingiants.today.api.error_handling.ApiException;
 
