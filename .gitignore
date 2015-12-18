@@ -1,5 +1,6 @@
 app/gradle.properties
 app/newrelic.properties
+app/crashlytics.properties
 captures/
 
 com_crashlytics_export_strings.xml
