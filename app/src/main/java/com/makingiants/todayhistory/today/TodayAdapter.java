@@ -4,15 +4,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.R;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.SongViewHolder> {
   private Event[] mEvents;
+  private Picasso mPicasso;
+
+  public TodayAdapter(Picasso picasso) {
+    mPicasso = picasso;
+  }
 
   @Override
   public SongViewHolder onCreateViewHolder(ViewGroup container, int viewType) {
@@ -27,6 +34,8 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.SongViewHold
 
     holder.titleTextView.setText(event.getTitle());
     holder.dateTextView.setText(event.getDate());
+
+    mPicasso.load(event.getImageUrl()).fit().into(holder.headerImage);
   }
 
   public void setEvents(List<Event> events) {
@@ -40,8 +49,9 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.SongViewHold
   }
 
   public static class SongViewHolder extends RecyclerView.ViewHolder {
-    @Bind(R.id.item_today_text_title) TextView dateTextView;
-    @Bind(R.id.item_today_text_date) TextView titleTextView;
+    @Bind(R.id.item_today_text_date) TextView dateTextView;
+    @Bind(R.id.item_today_text_title) TextView titleTextView;
+    @Bind(R.id.item_today_image) ImageView headerImage;
 
     SongViewHolder(View itemView) {
       super(itemView);

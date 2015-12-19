@@ -11,8 +11,10 @@ import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.R;
 import com.makingiants.todayhistory.utils.DateManager;
+import com.makingiants.todayhistory.utils.SpacesItemDecoration;
 import com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout;
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler;
+import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class TodayActivity extends TodayView
@@ -36,9 +38,10 @@ public class TodayActivity extends TodayView
     setContentView(R.layout.today_activity);
     activateToolbar(R.string.title_activity_today);
 
-    mAdapter = new TodayAdapter();
+    mAdapter = new TodayAdapter(Picasso.with(getApplicationContext()));
     mRecyclerView.setAdapter(mAdapter);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    mRecyclerView.addItemDecoration(new SpacesItemDecoration(32));
     mSwipeRefreshLayout.setOnRefreshListener(this);
     mSwipeRefreshLayout.setScrollEnabler(this);
     mSwipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary);
