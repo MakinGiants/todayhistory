@@ -19,6 +19,7 @@
     android:src="@android:color/darker_gray" />
 
   <LinearLayout
+    android:id="@+id/item_today_layout_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"

@@ -1,10 +1,8 @@
 <resources>
-  <string name="app_name">TodayHistory</string>
-  <string name="title_activity_today">TodayActivity</string>
+  <string name="app_name">Today History</string>
+  <string name="title_activity_today">Today</string>
 
   <string name="dialog_button_ok">OK</string>
 
-  <!-- CustomSongList-->
-  <string name="custom_empty_list">The loaded list is empty right now. The more you use the app, more events will appear!</string>
-
+  <string name="today_empty_list">We dont have info about what happened today :( excuse us.</string>
 </resources>
