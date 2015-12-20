@@ -84,6 +84,7 @@ android {
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
+  maven { url "https://clojars.org/repo/" }
 }
 
 dependencies {
@@ -98,6 +99,8 @@ dependencies {
   compile 'com.github.florent37:picassopalette:1.0.2@aar'
 
   // Management
+  compile 'frankiesardo:icepick:3.1.0'
+  provided 'frankiesardo:icepick-processor:3.1.0'
   compile 'com.jakewharton.timber:timber:4.1.0@aar'
   compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 

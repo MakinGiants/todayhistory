@@ -13,6 +13,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import com.makingiants.today.api.error_handling.ApiException;
 import com.makingiants.todayhistory.R;
+import icepick.Icepick;
 import java.lang.ref.WeakReference;
 import timber.log.Timber;
 
@@ -48,6 +49,13 @@ public class BaseActivityView extends AppCompatActivity {
     String className = getClass().getSimpleName();
     Timber.tag(className);
     Timber.d("(ActivityFlow) -> %s Created", className);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
   }
 
   @Override

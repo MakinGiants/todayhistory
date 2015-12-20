@@ -1,30 +1,33 @@
 package com.makingiants.todayhistory.today;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.VisibleForTesting;
 import com.makingiants.today.api.error_handling.ApiException;
 import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.utils.DateManager;
 import com.makingiants.todayhistory.utils.Transformer;
+import java.util.ArrayList;
 import java.util.List;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-public class TodayPresenter {
+public class TodayPresenter implements Parcelable {
   private HistoryRepository mHistoryRepository;
   private DateManager mDateManager;
   private CompositeSubscription mCompositeSubscription;
   private List<Event> mEvents;
   private TodayView mView;
 
-  public TodayPresenter(HistoryRepository historyRepository, DateManager dateManager) {
+  public TodayPresenter(DateManager dateManager) {
     super();
-    mHistoryRepository = historyRepository;
     mDateManager = dateManager;
   }
 
-  public void onCreate(TodayView view) {
+  public void onCreate(TodayView view, HistoryRepository historyRepository) {
     mView = view;
+    mHistoryRepository = historyRepository;
     mCompositeSubscription = new CompositeSubscription();
 
     if (mEvents == null) {
@@ -113,4 +116,32 @@ public class TodayPresenter {
 
     mCompositeSubscription.add(subscription);
   }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeParcelable(this.mDateManager, flags);
+    dest.writeList(this.mEvents);
+  }
+
+  protected TodayPresenter(Parcel in) {
+    this.mDateManager = in.readParcelable(DateManager.class.getClassLoader());
+    this.mEvents = new ArrayList<Event>();
+    in.readList(this.mEvents, List.class.getClassLoader());
+  }
+
+  public static final Parcelable.Creator<TodayPresenter> CREATOR =
+      new Parcelable.Creator<TodayPresenter>() {
+        public TodayPresenter createFromParcel(Parcel source) {
+          return new TodayPresenter(source);
+        }
+
+        public TodayPresenter[] newArray(int size) {
+          return new TodayPresenter[size];
+        }
+      };
 }

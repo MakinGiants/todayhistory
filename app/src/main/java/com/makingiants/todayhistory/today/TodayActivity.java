@@ -15,6 +15,7 @@ import com.makingiants.todayhistory.utils.SpacesItemDecoration;
 import com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout;
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler;
 import com.squareup.picasso.Picasso;
+import icepick.State;
 import java.util.List;
 
 public class TodayActivity extends TodayView
@@ -27,7 +28,7 @@ public class TodayActivity extends TodayView
   @Bind(R.id.today_text_error_title) TextView mErrorTitleTextView;
   @Bind(R.id.today_text_error_message) TextView mErrorMessageTextView;
 
-  private TodayPresenter mPresenter;
+  @State TodayPresenter mPresenter;
   private TodayAdapter mAdapter;
 
   //<editor-fold desc="Activity">
@@ -48,10 +49,10 @@ public class TodayActivity extends TodayView
     mSwipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary);
 
     if (mPresenter == null) {
-      mPresenter = new TodayPresenter(new HistoryRepository(), new DateManager());
+      mPresenter = new TodayPresenter(new DateManager());
     }
 
-    mPresenter.onCreate(this);
+    mPresenter.onCreate(this, new HistoryRepository());
   }
 
   @Override
