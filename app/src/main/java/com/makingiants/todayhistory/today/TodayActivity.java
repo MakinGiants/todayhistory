@@ -42,6 +42,7 @@ public class TodayActivity extends TodayView
     mRecyclerView.setAdapter(mAdapter);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     mRecyclerView.addItemDecoration(new SpacesItemDecoration(32));
+
     mSwipeRefreshLayout.setOnRefreshListener(this);
     mSwipeRefreshLayout.setScrollEnabler(this);
     mSwipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary);

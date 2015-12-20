@@ -17,7 +17,7 @@ public class TodayApp extends Application {
 
     Map<String, String> properties = getProperties();
     if (BuildConfig.ANALYTICS_ENABLED) {
-    Timber.plant(new CrashlyticsTree(this, properties));
+      Timber.plant(new CrashlyticsTree(this, properties));
     } else {
       Timber.plant(new DebugTree());
     }
