@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Today History</string>
+  <string name="title_activity_today">Today</string>
+
+  <string name="dialog_button_ok">OK</string>
+
+  <string name="today_empty_list">We dont have info about what happened today :( excuse us.</string>
+</resources>
