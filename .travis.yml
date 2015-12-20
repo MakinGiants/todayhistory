@@ -22,7 +22,9 @@ before_install:
   - chmod +x gradlew
 
 script:
-    - ./gradlew testMockedRelease --stacktrace
+    - echo "apiKey=$FABRIC_API_KEY" >> app/fabric.properties
+    - echo "apiSecret=$FABRIC_API_SECRET" >> app/fabric.properties
+    - ./gradlew testMockedDebug --stacktrace
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
