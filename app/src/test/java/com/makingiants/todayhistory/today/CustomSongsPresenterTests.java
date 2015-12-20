@@ -30,7 +30,7 @@ public class CustomSongsPresenterTests {
   @Before
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    presenter = new TodayPresenter(mockedEventRepository, mockedDateManager);
+    presenter = new TodayPresenter(mockedDateManager);
   }
 
   //<editor-fold desc="Basic Tests">
@@ -42,7 +42,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events(2)));
 
-    spiedPresenter.onCreate(mockedView);
+    spiedPresenter.onCreate(mockedView, mockedEventRepository);
 
     verify(spiedPresenter).loadSongs(true);
   }
@@ -56,10 +56,10 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    spiedPresenter.onCreate(mockedView);
+    spiedPresenter.onCreate(mockedView, mockedEventRepository);
     spiedPresenter.onDestroy();
 
-    spiedPresenter.onCreate(mockedView);
+    spiedPresenter.onCreate(mockedView, mockedEventRepository);
 
     verify(spiedPresenter, times(1)).loadSongs(true);
     verify(mockedView, times(2)).showEvents(events);
@@ -71,7 +71,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events(2)));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
     presenter.onDestroy();
 
     assertThat(presenter.getView()).isNull();
@@ -87,7 +87,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     verify(mockedView).showEmptyViewProgress();
     verify(mockedView).dismissEmptyViewProgress();
@@ -101,7 +101,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     verify(mockedView).showEmptyViewProgress();
     verify(mockedView).dismissEmptyViewProgress();
@@ -116,7 +116,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.error(error));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     verify(mockedView).showEmptyViewProgress();
     verify(mockedView).dismissEmptyViewProgress();
@@ -134,7 +134,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     when(mockedDateManager.getTodayDay()).thenReturn(1);
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
@@ -158,7 +158,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.error(error));
 
@@ -180,7 +180,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.error(error));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     List<Event> newEvents = events(5);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents));
@@ -201,7 +201,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     List<Event> newEvents = events(5);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents));
@@ -222,7 +222,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.error(error));
 
@@ -245,7 +245,7 @@ public class CustomSongsPresenterTests {
     when(mockedDateManager.getTodayMonth()).thenReturn(2);
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(events));
 
-    presenter.onCreate(mockedView);
+    presenter.onCreate(mockedView, mockedEventRepository);
 
     when(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents));
 
