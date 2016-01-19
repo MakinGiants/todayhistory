@@ -1,35 +1,112 @@
-apply plugin: 'com.android.application'
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter() // gradle-versions-plugin
+    maven { url 'https://maven.fabric.io/public' }
+  }
 
-def appId = "com.makingiants.today.todayhistory"
+  dependencies {
+    classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta3'
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
+    classpath 'io.fabric.tools:gradle:1.21.2'
+  }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'io.fabric'
+
+def appId = "com.makingiants.todayhistory"
 def appVersionName = "0.1.0"
 def appVersionCode = 1
 
+def gitSha() {
+  'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+}
+
 android {
-  compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  compileSdkVersion rootProject.sdkVersion
+  buildToolsVersion rootProject.buildToolsVersion
 
   defaultConfig {
     applicationId appId
-    minSdkVersion 15
-    targetSdkVersion 23
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.sdkVersion
     versionCode appVersionCode
     versionName appVersionName
+
+    // Add version and build number to apk name
+    setProperty("archivesBaseName", "today-${appVersionName}-${appVersionCode}")
+
+    buildConfigField "String", "HOST", "\"http://day-in-history.herokuapp.com\""
+    buildConfigField "String", "GIT_SHA", "\"STATIC_FOR_PERFORMANCE\""
+    buildConfigField "boolean", "ANALYTICS_ENABLED", "false"
   }
   buildTypes {
-    release {
-      minifyEnabled true
-      shrinkResources true
+    debug {
+      minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+      buildConfigField "String", "GIT_SHA", "\"${gitSha()}\""
+      buildConfigField "boolean", "ANALYTICS_ENABLED", "true"
+    }
+  }
+
+  productFlavors {
+    prod
+    mocked
+  }
+  testOptions {
+    unitTests.all {
+      jvmArgs "-XX:MaxPermSize=2048m"
+
+      beforeTest { descriptor -> logger.lifecycle("Running test: " + descriptor)
+      }
+    }
+  }
+
+  lintOptions {
+    fatal 'UnusedResources'
+    abortOnError false
+  }
+
+  // Retrolambda
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
   }
 }
 
-ext {
-  supportVersion = "23.1.1"
+repositories {
+  maven { url 'https://maven.fabric.io/public' }
+  maven { url "https://clojars.org/repo/" }
 }
 
 dependencies {
-  compile "com.android.support:appcompat-v7:${supportVersion}"
+  compile project(':api')
+  compile rootProject.deps.appCompatV7
+  compile "com.android.support:design:${rootProject.supportLibVersion}"
+  compile "com.android.support:cardview-v7:${rootProject.supportLibVersion}"
+  compile "com.android.support:palette-v7:${rootProject.supportLibVersion}"
+
+  compile 'com.jakewharton:butterknife:7.0.1'
+  compile 'com.squareup.picasso:picasso:2.5.2'
+  compile 'com.github.florent37:picassopalette:1.0.2@aar'
+
+  // Management
+  compile 'frankiesardo:icepick:3.1.0'
+  provided 'frankiesardo:icepick-processor:3.1.0'
+  compile 'com.jakewharton.timber:timber:4.1.0@aar'
+  compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 
   testCompile 'junit:junit:4.12'
+  testCompile "org.mockito:mockito-core:1.10.19"
+  testCompile('com.squareup.assertj:assertj-android:1.1.1') {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  }
 }

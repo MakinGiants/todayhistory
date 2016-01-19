@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_dialog_title">Error</string>
+  <string name="error_dialog_message">There was an error</string>
+
+  <!--<string name="error_text_empty">Can\'t be empty.</string>-->
+  <!--<string name="error_text_undefined">There was an error.</string>-->
+
+  <!--<string name="error_text_no_internet">Looks like there\'s no internet connection.</string>-->
+</resources>

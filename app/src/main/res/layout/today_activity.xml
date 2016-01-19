@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
+
+  <include
+    android:id="@+id/toolbar"
+    layout="@layout/toolbar_view" />
+
+  <com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout
+    android:id="@+id/today_layout_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/toolbar">
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+      <!-- Content -->
+      <android.support.v7.widget.RecyclerView
+        android:id="@+id/today_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:listitem="@layout/today_item"
+        tools:visibility="visible" />
+
+      <!-- Initial load Progress -->
+      <ProgressBar
+        android:id="@+id/today_view_progress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+      <!-- Empty View -->
+      <ScrollView
+        android:id="@+id/today_view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+          style="@style/TextAppearance.AppCompat.Body1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="@dimen/margin_activity_horizontal"
+          android:layout_marginLeft="@dimen/margin_activity_horizontal"
+          android:layout_marginRight="@dimen/margin_activity_horizontal"
+          android:layout_marginStart="@dimen/margin_activity_horizontal"
+          android:layout_marginTop="@dimen/margin_activity_vertical"
+          android:drawablePadding="@dimen/spacing_medium"
+          android:drawableTop="@drawable/ic_archive_grey_500_48dp"
+          android:gravity="center"
+          android:text="@string/today_empty_list"
+          android:textColor="@android:color/darker_gray" />
+      </ScrollView>
+
+      <!-- Error mView -->
+      <ScrollView
+        android:id="@+id/today_view_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="@dimen/margin_activity_vertical"
+          android:orientation="vertical">
+
+          <TextView
+            android:id="@+id/today_text_error_title"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/margin_activity_horizontal"
+            android:layout_marginLeft="@dimen/margin_activity_horizontal"
+            android:layout_marginRight="@dimen/margin_activity_horizontal"
+            android:layout_marginStart="@dimen/margin_activity_horizontal"
+            android:drawablePadding="@dimen/spacing_medium"
+            android:drawableTop="@drawable/ic_error_grey_500_48dp"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/darker_gray"
+            tools:ignore="UnusedAttribute"
+            tools:text="Error Title" />
+
+          <TextView
+            android:id="@+id/today_text_error_message"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/margin_activity_horizontal"
+            android:layout_marginLeft="@dimen/margin_activity_horizontal"
+            android:layout_marginRight="@dimen/margin_activity_horizontal"
+            android:layout_marginStart="@dimen/margin_activity_horizontal"
+            android:layout_marginTop="@dimen/spacing_large"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/darker_gray"
+            tools:ignore="UnusedAttribute"
+            tools:text="This is an error message! something happened :O!" />
+        </LinearLayout>
+      </ScrollView>
+
+    </FrameLayout>
+
+  </com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout>
+</RelativeLayout>
