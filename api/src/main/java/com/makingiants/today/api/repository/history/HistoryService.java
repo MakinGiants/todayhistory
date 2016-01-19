@@ -8,5 +8,5 @@ import rx.Observable;
 
 interface HistoryService {
   @GET("/main.json")
-  Observable<List<Event>> get(@Query("day") int day, @Query("month") int month);
+  Observable<List<Event>> get(@Query("day") int day, @Query("month") String month);
 }

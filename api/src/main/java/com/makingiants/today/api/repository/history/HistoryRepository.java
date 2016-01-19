@@ -13,6 +13,7 @@ public class HistoryRepository {
   }
 
   public Observable<List<Event>> get(int day, int month) {
-    return mHistoryService.get(day, month);
+    String formattedMoth = String.format("%02d", ++month);
+    return mHistoryService.get(day, formattedMoth);
   }
 }

@@ -7,6 +7,7 @@ import com.makingiants.today.api.error_handling.ApiException;
 import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.utils.DateManager;
+import com.makingiants.todayhistory.utils.NetworkChecker;
 import com.makingiants.todayhistory.utils.Transformer;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import rx.subscriptions.CompositeSubscription;
 
 public class TodayPresenter implements Parcelable {
   private HistoryRepository mHistoryRepository;
+  private NetworkChecker mNetworkChecker;
   private DateManager mDateManager;
   private CompositeSubscription mCompositeSubscription;
   private List<Event> mEvents;
@@ -25,13 +27,15 @@ public class TodayPresenter implements Parcelable {
     mDateManager = dateManager;
   }
 
-  public void onCreate(TodayView view, HistoryRepository historyRepository) {
+  public void onCreate(TodayView view, HistoryRepository historyRepository,
+      NetworkChecker networkChecker) {
     mView = view;
     mHistoryRepository = historyRepository;
+    mNetworkChecker = networkChecker;
     mCompositeSubscription = new CompositeSubscription();
 
     if (mEvents == null) {
-      loadSongs(true);
+      loadEvents(true);
     } else {
       view.showEvents(mEvents);
     }
@@ -46,7 +50,7 @@ public class TodayPresenter implements Parcelable {
   }
 
   public void updateItems() {
-    loadSongs(false);
+    loadEvents(false);
   }
 
   @VisibleForTesting
@@ -60,7 +64,12 @@ public class TodayPresenter implements Parcelable {
   }
 
   @VisibleForTesting
-  void loadSongs(boolean isFistTime) {
+  void loadEvents(boolean isFistTime) {
+    if (!mNetworkChecker.isNetworkConnectionAvailable()){
+      mView.showErrorToast("There is no internet.");
+      return;
+    }
+
     if (isFistTime) {
       mView.showEmptyViewProgress();
     } else {

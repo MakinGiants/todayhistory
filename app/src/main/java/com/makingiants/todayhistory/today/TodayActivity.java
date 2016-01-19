@@ -11,6 +11,7 @@ import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.R;
 import com.makingiants.todayhistory.utils.DateManager;
+import com.makingiants.todayhistory.utils.NetworkChecker;
 import com.makingiants.todayhistory.utils.SpacesItemDecoration;
 import com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout;
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler;
@@ -52,7 +53,7 @@ public class TodayActivity extends TodayView
       mPresenter = new TodayPresenter(new DateManager());
     }
 
-    mPresenter.onCreate(this, new HistoryRepository());
+    mPresenter.onCreate(this, new HistoryRepository(), new NetworkChecker(getApplicationContext()));
   }
 
   @Override
