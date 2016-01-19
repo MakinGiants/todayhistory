@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.github.florent37.picassopalette.PicassoPalette;
 import com.makingiants.today.api.repository.history.pojo.Event;
 import com.makingiants.todayhistory.R;
 import com.squareup.picasso.Picasso;
@@ -39,11 +38,15 @@ public class TodayAdapter extends RecyclerView.Adapter<TodayAdapter.SongViewHold
 
     mPicasso.load(event.getImageUrl())
         .fit()
-        .into(holder.headerImage, PicassoPalette.with(event.getImageUrl(), holder.headerImage)
-            .use(PicassoPalette.Profile.VIBRANT)
-            .intoBackground(holder.textLinearLayout)
-            .intoTextColor(holder.dateTextView, PicassoPalette.Swatch.BODY_TEXT_COLOR)
-            .intoTextColor(holder.titleTextView, PicassoPalette.Swatch.TITLE_TEXT_COLOR));
+        .into(holder.headerImage);
+
+    //mPicasso.load(event.getImageUrl())
+    //    .fit()
+    //    .into(holder.headerImage, PicassoPalette.with(event.getImageUrl(), holder.headerImage)
+    //        .use(PicassoPalette.Profile.VIBRANT)
+    //        .intoBackground(holder.textLinearLayout)
+    //        .intoTextColor(holder.dateTextView, PicassoPalette.Swatch.BODY_TEXT_COLOR)
+    //        .intoTextColor(holder.titleTextView, PicassoPalette.Swatch.TITLE_TEXT_COLOR));
   }
 
   public void setEvents(List<Event> events) {

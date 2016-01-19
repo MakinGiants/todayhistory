@@ -43,7 +43,7 @@ public class TodayActivity extends TodayView
     mAdapter = new TodayAdapter(Picasso.with(getApplicationContext()));
     mRecyclerView.setAdapter(mAdapter);
     mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-    mRecyclerView.addItemDecoration(new SpacesItemDecoration(32));
+    mRecyclerView.addItemDecoration(new SpacesItemDecoration(16));
 
     mSwipeRefreshLayout.setOnRefreshListener(this);
     mSwipeRefreshLayout.setScrollEnabler(this);

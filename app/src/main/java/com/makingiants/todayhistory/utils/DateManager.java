@@ -16,7 +16,6 @@ public class DateManager implements Parcelable {
   }
 
   public int getTodayMonth() {
-    Calendar cal = Calendar.getInstance();
     return mCalendar.get(Calendar.MONTH);
   }
 
