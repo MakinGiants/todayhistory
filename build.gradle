@@ -27,6 +27,6 @@ ext {
   minSdkVersion = 15
   buildToolsVersion = "23.0.2"
   supportLibVersion = "23.1.1"
-
+  playServicesVersion = "8.4.0"
   deps = [appCompatV7: "com.android.support:appcompat-v7:${supportLibVersion}"]
 }

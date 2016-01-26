@@ -7,8 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.Bind;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.makingiants.today.api.repository.history.HistoryRepository;
 import com.makingiants.today.api.repository.history.pojo.Event;
+import com.makingiants.todayhistory.BuildConfig;
 import com.makingiants.todayhistory.R;
 import com.makingiants.todayhistory.utils.DateManager;
 import com.makingiants.todayhistory.utils.NetworkChecker;
@@ -28,6 +31,7 @@ public class TodayActivity extends TodayView
   @Bind(R.id.today_view_error) View mErrorView;
   @Bind(R.id.today_text_error_title) TextView mErrorTitleTextView;
   @Bind(R.id.today_text_error_message) TextView mErrorMessageTextView;
+  @Bind(R.id.today_ads) AdView adView;
 
   @State TodayPresenter mPresenter;
   private TodayAdapter mAdapter;
@@ -48,6 +52,17 @@ public class TodayActivity extends TodayView
     mSwipeRefreshLayout.setOnRefreshListener(this);
     mSwipeRefreshLayout.setScrollEnabler(this);
     mSwipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary);
+
+    AdRequest adRequest;
+    if (BuildConfig.DEBUG) {
+      adRequest = new AdRequest.Builder()
+          .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+          .addTestDevice("027c6ee5571a8376")
+          .build();
+    } else {
+      adRequest = new AdRequest.Builder().build();
+    }
+    adView.loadAd(adRequest);
 
     if (mPresenter == null) {
       mPresenter = new TodayPresenter(new DateManager());
