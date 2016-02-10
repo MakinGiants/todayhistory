@@ -9,10 +9,14 @@ buildscript {
     classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta3'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
     classpath 'io.fabric.tools:gradle:1.21.2'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$deps.kotlin"
+    classpath "org.jetbrains.kotlin:kotlin-android-extensions:$deps.kotlin"
   }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
@@ -26,13 +30,13 @@ def gitSha() {
 }
 
 android {
-  compileSdkVersion rootProject.sdkVersion
-  buildToolsVersion rootProject.buildToolsVersion
+  compileSdkVersion setup.sdkVersion
+  buildToolsVersion setup.buildToolsVersion
 
   defaultConfig {
     applicationId appId
-    minSdkVersion rootProject.minSdkVersion
-    targetSdkVersion rootProject.sdkVersion
+    minSdkVersion setup.minSdkVersion
+    targetSdkVersion setup.sdkVersion
     versionCode appVersionCode
     versionName appVersionName
 
@@ -80,6 +84,14 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
+
+  // Kotlin
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+    prod.java.srcDirs += 'src/main/kotlin'
+    mocked.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/main/kotlin'
+  }
 }
 
 repositories {
@@ -89,12 +101,12 @@ repositories {
 
 dependencies {
   compile project(':api')
-  compile rootProject.deps.appCompatV7
-  compile "com.android.support:design:${rootProject.supportLibVersion}"
-  compile "com.android.support:cardview-v7:${rootProject.supportLibVersion}"
-  compile "com.android.support:palette-v7:${rootProject.supportLibVersion}"
+  compile "com.android.support:appcompat-v7:$deps.supportLibVersion"
+  compile "com.android.support:design:$deps.supportLibVersion"
+  compile "com.android.support:cardview-v7:$deps.supportLibVersion"
+  compile "com.android.support:palette-v7:$deps.supportLibVersion"
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlin"
 
-  compile 'com.jakewharton:butterknife:7.0.1'
   compile 'com.squareup.picasso:picasso:2.5.2'
   compile 'com.github.florent37:picassopalette:1.0.2@aar'
 
