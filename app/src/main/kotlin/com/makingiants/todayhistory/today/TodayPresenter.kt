@@ -8,13 +8,13 @@ import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
-import rx.schedulers.Schedulers
+import com.makingiants.todayhistory.utils.Transformer
 import rx.subscriptions.CompositeSubscription
 import java.util.*
 
 open class TodayPresenter : Parcelable {
-    @VisibleForTesting internal var compositeSubscription: CompositeSubscription? = null
-    @VisibleForTesting internal var view: TodayView? = null
+    @VisibleForTesting var compositeSubscription: CompositeSubscription? = null
+    @VisibleForTesting var view: TodayView? = null
 
     private var mHistoryRepository: HistoryRepository? = null
     private var mNetworkChecker: NetworkChecker? = null
@@ -52,7 +52,7 @@ open class TodayPresenter : Parcelable {
     }
 
     @VisibleForTesting
-    internal fun loadEvents(isFistTime: Boolean) {
+    fun loadEvents(isFistTime: Boolean) {
         if (!(mNetworkChecker?.isNetworkConnectionAvailable() ?: true)) {
             view?.showErrorToast("There is no internet.")
             return
@@ -65,8 +65,7 @@ open class TodayPresenter : Parcelable {
         }
 
         val subscription = mHistoryRepository!!.get(mDateManager!!.getTodayDay(), mDateManager!!.getTodayMonth())
-                .subscribeOn(Schedulers.immediate())
-                .observeOn(Schedulers.immediate())
+                .compose(Transformer.applyIoSchedulers<List<Event>>())
                 .subscribe({ events: List<Event> ->
                     view?.hideErrorView()
                     view?.hideEmptyView()
@@ -100,14 +99,14 @@ open class TodayPresenter : Parcelable {
                     if (mEvents == null) {
                         if (isFistTime || mEvents == null || mEvents!!.isEmpty()) {
                             val apiException = ApiException.from(error)
-                            view?.showErrorView(apiException.name, apiException.message)
+                            view?.showErrorView(apiException.name, apiException.text)
                             view?.hideEvents()
                         } else {
                             view?.showError(error)
                         }
                     } else {
                         val apiException = ApiException.from(error)
-                        view?.showErrorToast(apiException.message)
+                        view?.showErrorToast(apiException.text)
                     }
                 })
 

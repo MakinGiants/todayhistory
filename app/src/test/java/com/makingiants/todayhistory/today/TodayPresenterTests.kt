@@ -15,10 +15,10 @@ import org.mockito.Mockito.*
 import rx.Observable
 
 class TodayPresenterTests {
-    internal var mockedEventRepository: HistoryRepository = mock(HistoryRepository::class.java)
-    internal var mockedView: TodayView = mock(TodayView::class.java)
-    internal var mockedDateManager: DateManager = mock(DateManager::class.java)
-    internal var mockedNetworkChecker: NetworkChecker = mock(NetworkChecker::class.java)
+    var mockedEventRepository: HistoryRepository = mock(HistoryRepository::class.java)
+    var mockedView: TodayView = mock(TodayView::class.java)
+    var mockedDateManager: DateManager = mock(DateManager::class.java)
+    var mockedNetworkChecker: NetworkChecker = mock(NetworkChecker::class.java)
     internal var presenter: TodayPresenter? = null
 
     @Before
@@ -138,7 +138,7 @@ class TodayPresenterTests {
         verify(mockedView).dismissEmptyViewProgress()
         verify(mockedView).hideEmptyView()
         verify(mockedView).hideEvents()
-        verify(mockedView).showErrorView(error.name, error.message)
+        verify(mockedView).showErrorView(error.name, error.text)
     }
 
     @Test
@@ -185,7 +185,7 @@ class TodayPresenterTests {
         verify(mockedView).dismissReloadProgress()
         verify(mockedView, times(2)).hideEmptyView()
         verify(mockedView).hideEvents()
-        verify(mockedView).showErrorView(error.name, error.message)
+        verify(mockedView).showErrorView(error.name, error.text)
     }
 
     @Test

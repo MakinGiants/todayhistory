@@ -11,14 +11,12 @@ import rx.android.schedulers.AndroidSchedulers;
  * observable.compose(applyIoSchedulers())
  */
 
-class Transformer {
-    companion object {
-        fun <T> applyIoSchedulers(): Observable.Transformer<T, T> {
-            return object : Observable.Transformer<T, T> {
-                override fun call(observable: Observable<T>): Observable<T> {
-                    return observable.subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread());
-                }
+object Transformer {
+    inline fun <T> applyIoSchedulers(): Observable.Transformer<T, T> {
+        return object : Observable.Transformer<T, T> {
+            override fun call(observable: Observable<T>): Observable<T> {
+                return observable.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
             }
         }
     }

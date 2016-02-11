@@ -6,7 +6,6 @@ buildscript {
   }
 
   dependencies {
-    classpath 'me.tatarka:gradle-retrolambda:3.3.0-beta3'
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
     classpath 'io.fabric.tools:gradle:1.21.2'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$deps.kotlin"
@@ -17,7 +16,6 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
 
@@ -79,18 +77,11 @@ android {
     abortOnError false
   }
 
-  // Retrolambda
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
   // Kotlin
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
-    prod.java.srcDirs += 'src/main/kotlin'
-    mocked.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/main/kotlin'
+    prod.java.srcDirs += 'src/prod/kotlin'
+    mocked.java.srcDirs += 'src/mocked/kotlin'
   }
 }
 
@@ -118,6 +109,7 @@ dependencies {
 
   testCompile 'junit:junit:4.12'
   testCompile "org.mockito:mockito-core:1.10.19"
+  testCompile "org.jetbrains.kotlin:kotlin-test:$deps.kotlin"
   testCompile('com.squareup.assertj:assertj-android:1.1.1') {
     exclude group: 'com.android.support', module: 'support-annotations'
   }

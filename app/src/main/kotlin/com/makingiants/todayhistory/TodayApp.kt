@@ -20,7 +20,7 @@ class TodayApp : Application() {
         }
 
         Api.init(applicationContext, BuildConfig.HOST)
-        Api.setLogLevel(Api.LOG_LEVEL_FULL)
+        Api.logLevel = Api.LOG_LEVEL_FULL
     }
 
     companion object {
