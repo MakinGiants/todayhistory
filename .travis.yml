@@ -1,5 +1,9 @@
 language: android
 
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+
 android:
   licenses:
     - 'android-sdk-license-.+'
@@ -12,10 +16,10 @@ android:
     - extra-android-m2repository
 
 before_install:
-  - echo "MAVEN_OPTS='-Xmx4096m -XX:MaxPermSize=4096m'" > ~/.mavenrc
+  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
+  - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+  - export JAVA_HOME=$JAVA8_HOME
   - chmod +x gradlew
-  - java -Xmx1024m -version
-  - javac -J-Xmx1024 -version
 
 script:
     - echo "apiKey=$FABRIC_API_KEY" >> app/fabric.properties
