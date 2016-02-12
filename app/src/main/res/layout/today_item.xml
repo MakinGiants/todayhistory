@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/item_card_main"
+<android.support.v7.widget.CardView android:id="@+id/card_main"
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:card_view="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
@@ -12,14 +12,14 @@
   card_view:cardCornerRadius="4dp">
 
   <ImageView
-    android:id="@+id/item_today_image"
+    android:id="@+id/image"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:layout_alignParentTop="true"
     android:src="@android:color/darker_gray" />
 
   <LinearLayout
-    android:id="@+id/item_today_layout_text"
+    android:id="@+id/textLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
@@ -27,7 +27,7 @@
     android:orientation="vertical">
 
     <TextView
-      android:id="@+id/item_today_text_title"
+      android:id="@+id/titleTextView"
       style="@style/TextAppearance.AppCompat.Body2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
       tools:text="This is a really big songIndex name big big big big big big big big big 123 big big big big big big big 12big big big big big big big 12" />
 
     <TextView
-      android:id="@+id/item_today_text_date"
+      android:id="@+id/dateTextView"
       style="@style/TextAppearance.AppCompat.Caption"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

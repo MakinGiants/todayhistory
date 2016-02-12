@@ -11,8 +11,11 @@
 # stash any unstaged changes
 git stash -q --keep-index
 
+ABSOLUTE_PATH=$(cd `dirname "${BASH_SOURCE[0]}"`)
+ABSOLUTE_PARENT_PATH="$(dirname "$ABSOLUTE_PATH")"
+
 # run the tests with the gradle wrapper
-./gradlew test --daemon
+sh $ABSOLUTE_PARENT_PATH/gradlew testMockedDebug testMockedRelease --daemon
 
 # store the last exit code in a variable
 RESULT=$?

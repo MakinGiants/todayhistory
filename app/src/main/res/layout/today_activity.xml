@@ -10,7 +10,7 @@
     layout="@layout/toolbar_view" />
 
   <com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout
-    android:id="@+id/today_layout_refresh"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@id/toolbar">
@@ -21,7 +21,7 @@
 
       <!-- Content -->
       <android.support.v7.widget.RecyclerView
-        android:id="@+id/today_recycler"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -30,7 +30,7 @@
 
       <!-- Initial load Progress -->
       <ProgressBar
-        android:id="@+id/today_view_progress"
+        android:id="@+id/progressView"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 
       <!-- Empty View -->
       <ScrollView
-        android:id="@+id/today_view_empty"
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -63,7 +63,7 @@
 
       <!-- Error mView -->
       <ScrollView
-        android:id="@+id/today_view_error"
+        android:id="@+id/errorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -76,7 +76,7 @@
           android:orientation="vertical">
 
           <TextView
-            android:id="@+id/today_text_error_title"
+            android:id="@+id/errorTitleView"
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             tools:text="Error Title" />
 
           <TextView
-            android:id="@+id/today_text_error_message"
+            android:id="@+id/errorMessageTextView"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
