@@ -30,16 +30,8 @@ object Api {
     const val LOG_LEVEL_FULL = 2L
 
     private var sRestAdapter: RestAdapter? = null
-    //</editor-fold>
 
-    //<editor-fold desc="Log Level">
-    var logLevel = LOG_LEVEL_NONE
-        set(@LogLevel logLevel) {
-            this.logLevel = logLevel
-            if (sRestAdapter != null) {
-                sRestAdapter!!.setLogLevel(adapterLogLevel)
-            }
-        }
+    private var mLogLevel = LOG_LEVEL_NONE
 
     @IntDef(LOG_LEVEL_NONE, LOG_LEVEL_BASIC, LOG_LEVEL_FULL)
     @Retention(AnnotationRetention.SOURCE)
@@ -48,7 +40,7 @@ object Api {
     private var mWeakContext: WeakReference<Context>? = null
 
     //<editor-fold desc="Init">
-    fun init(context: Context, host: String) {
+    fun init(context: Context, host: String, @LogLevel logLevel: Long = LOG_LEVEL_NONE) {
         val okHttpClient = OkHttpClient()
         okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS) // Initial value: 10
         okHttpClient.setWriteTimeout(30, TimeUnit.SECONDS)
@@ -57,30 +49,24 @@ object Api {
         mWeakContext = WeakReference(context)
         sRestAdapter = RestAdapter.Builder().setEndpoint(host).setClient(OkClient(okHttpClient)).setConverter(GsonConverter(gson())).setErrorHandler(ApiErrorHandler()).build()
 
+        this.mLogLevel = logLevel
         // Refresh logLevel because maybe rest adapter was null before it is setted.
-        logLevel = logLevel
+        sRestAdapter?.setLogLevel(adapterLogLevel)
     }
 
     fun <T> create(service: Class<T>): T? = sRestAdapter?.create(service)
 
-    //</editor-fold>
-
-    //<editor-fold desc="Getters">
-
     @VisibleForTesting
     fun gson(): Gson =
-        GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
-
-    val context: Context?
-        get() = mWeakContext?.get()
+            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
     val adapterLogLevel: RestAdapter.LogLevel
         get() {
-            if (logLevel == LOG_LEVEL_NONE) {
+            if (mLogLevel == LOG_LEVEL_NONE) {
                 return RestAdapter.LogLevel.NONE
-            } else if (logLevel == LOG_LEVEL_BASIC) {
+            } else if (mLogLevel == LOG_LEVEL_BASIC) {
                 return RestAdapter.LogLevel.BASIC
-            } else if (logLevel == LOG_LEVEL_FULL) {
+            } else if (mLogLevel == LOG_LEVEL_FULL) {
                 return RestAdapter.LogLevel.FULL
             } else {
                 return RestAdapter.LogLevel.NONE

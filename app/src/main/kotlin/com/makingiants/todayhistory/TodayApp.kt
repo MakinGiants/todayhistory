@@ -19,8 +19,7 @@ class TodayApp : Application() {
             Timber.plant(DebugTree())
         }
 
-        Api.init(applicationContext, BuildConfig.HOST)
-        Api.logLevel = Api.LOG_LEVEL_FULL
+        Api.init(applicationContext, BuildConfig.HOST, Api.LOG_LEVEL_FULL)
     }
 
     companion object {

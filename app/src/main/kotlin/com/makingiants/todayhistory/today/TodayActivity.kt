@@ -16,7 +16,7 @@ import icepick.State
 import kotlinx.android.synthetic.main.today_activity.*
 
 class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
-    @State internal var mPresenter: TodayPresenter? = null
+    @State var mPresenter: TodayPresenter? = null
     private var mAdapter: TodayAdapter? = null
 
     //<editor-fold desc="Activity">
@@ -26,12 +26,11 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
         setContentView(R.layout.today_activity)
         activateToolbar(R.string.title_activity_today)
 
-        mAdapter = TodayAdapter(Picasso.with(getApplicationContext()))
+        mAdapter = TodayAdapter(Picasso.with(applicationContext))
 
-
-        recycler.setAdapter(mAdapter)
-        recycler.setLayoutManager(LinearLayoutManager(getApplicationContext()))
-        recycler.addItemDecoration(SpacesItemDecoration(16))
+        recyclerView.setAdapter(mAdapter)
+        recyclerView.setLayoutManager(LinearLayoutManager(applicationContext))
+        recyclerView.addItemDecoration(SpacesItemDecoration(16))
 
         swipeRefreshLayout.setOnRefreshListener(this)
         swipeRefreshLayout.setScrollEnabler(this)
@@ -41,7 +40,7 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
             mPresenter = TodayPresenter(AndroidDateManager())
         }
 
-        mPresenter?.onCreate(this, HistoryRepositoryImpl(), NetworkCheckerImpl(getApplicationContext()))
+        mPresenter?.onCreate(this, HistoryRepositoryImpl(), NetworkCheckerImpl(applicationContext))
     }
 
     override fun onDestroy() {
@@ -55,12 +54,12 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
 
     //<editor-fold desc="TodayView">
     override fun showEvents(events: List<Event>) {
-        recycler?.setVisibility(View.VISIBLE)
+        recyclerView?.setVisibility(View.VISIBLE)
         mAdapter?.setEvents(events)
     }
 
     override fun hideEvents() {
-        recycler?.setVisibility(View.GONE)
+        recyclerView?.setVisibility(View.GONE)
     }
 
     override fun showEmptyViewProgress() {
@@ -68,11 +67,15 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
     }
 
     override fun dismissEmptyViewProgress() {
-        emptyView?.visibility = View.GONE
+        progressView?.visibility = View.GONE
     }
 
     override fun showReloadProgress() {
         swipeRefreshLayout?.setRefreshing(true)
+    }
+
+    override fun dismissReloadProgress() {
+        swipeRefreshLayout?.setRefreshing(false)
     }
 
     override fun showErrorView(title: String, message: String) {
@@ -87,10 +90,6 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
 
     override fun showErrorToast(message: String) {
         showToast(message)
-    }
-
-    override fun dismissReloadProgress() {
-        swipeRefreshLayout?.setRefreshing(false)
     }
 
     override fun showEmptyView() {
@@ -110,7 +109,8 @@ class TodayActivity : TodayView(), SwipeRefreshLayout.OnRefreshListener, ScrollE
 
     //<editor-fold desc="ScrollEnabler">
     override fun canScrollUp(): Boolean {
-        return recycler?.getVisibility() === View.VISIBLE && recycler?.canScrollVertically(-1) ?: true
+        return recyclerView?.getVisibility() === View.VISIBLE &&
+                recyclerView?.canScrollVertically(-1) ?: false
     }
     //</editor-fold>
 }

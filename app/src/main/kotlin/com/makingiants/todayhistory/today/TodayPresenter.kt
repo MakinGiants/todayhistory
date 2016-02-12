@@ -13,9 +13,8 @@ import rx.subscriptions.CompositeSubscription
 import java.util.*
 
 open class TodayPresenter : Parcelable {
-    @VisibleForTesting var compositeSubscription: CompositeSubscription? = null
-    @VisibleForTesting var view: TodayView? = null
-
+    @VisibleForTesting var mCompositeSubscription: CompositeSubscription? = null
+    @VisibleForTesting var mView: TodayView? = null
     private var mHistoryRepository: HistoryRepository? = null
     private var mNetworkChecker: NetworkChecker? = null
     private var mDateManager: DateManager? = null
@@ -27,95 +26,85 @@ open class TodayPresenter : Parcelable {
 
     fun onCreate(view: TodayView, historyRepository: HistoryRepository,
                  networkChecker: NetworkChecker) {
-        this.view = view
+        mView = view
         mHistoryRepository = historyRepository
         mNetworkChecker = networkChecker
-        compositeSubscription = CompositeSubscription()
+        mCompositeSubscription = CompositeSubscription()
 
         if (mEvents == null) {
             loadEvents(true)
         } else {
-            view.showEvents(mEvents!!)
+            mView?.showEvents(mEvents!!)
         }
     }
 
     fun onDestroy() {
-        view = null
+        mView = null
 
-        if (compositeSubscription?.hasSubscriptions() ?: false) {
-            compositeSubscription?.unsubscribe()
+        if (mCompositeSubscription?.hasSubscriptions() ?: false) {
+            mCompositeSubscription?.unsubscribe()
         }
     }
 
     fun updateItems() {
-        loadEvents(false)
+        loadEvents()
     }
 
     @VisibleForTesting
-    fun loadEvents(isFistTime: Boolean) {
+    fun loadEvents(isFistTime: Boolean = false) {
         if (!(mNetworkChecker?.isNetworkConnectionAvailable() ?: true)) {
-            view?.showErrorToast("There is no internet.")
+            mView?.showErrorToast("There is no internet.")
             return
         }
 
         if (isFistTime) {
-            view?.showEmptyViewProgress()
+            mView?.showEmptyViewProgress()
         } else {
-            view?.showReloadProgress()
+            mView?.showReloadProgress()
         }
 
         val subscription = mHistoryRepository!!.get(mDateManager!!.getTodayDay(), mDateManager!!.getTodayMonth())
                 .compose(Transformer.applyIoSchedulers<List<Event>>())
                 .subscribe({ events: List<Event> ->
-                    view?.hideErrorView()
-                    view?.hideEmptyView()
-
-                    if (isFistTime) {
-                        view?.dismissEmptyViewProgress()
-                    } else {
-                        view?.dismissReloadProgress()
-                    }
+                    mView?.hideErrorView()
+                    mView?.hideEmptyView()
+                    mView?.dismissEmptyViewProgress()
+                    mView?.dismissReloadProgress()
 
                     if (events.isEmpty()) {
                         if (mEvents == null) {
-                            view?.showEmptyView()
+                            mView?.showEmptyView()
                         } else {
                             // TODO: move the string to strings and show from view
-                            view?.showErrorToast("The loaded list is empty, retry latter.")
+                            mView?.showErrorToast("The loaded list is empty, retry latter.")
                         }
                     } else {
                         mEvents = events
-                        view?.showEvents(events)
+                        mView?.showEvents(events)
                     }
                 }, { error: Throwable ->
-                    view?.hideEmptyView()
-
-                    if (isFistTime) {
-                        view?.dismissEmptyViewProgress()
-                    } else {
-                        view?.dismissReloadProgress()
-                    }
+                    mView?.hideEmptyView()
+                    mView?.dismissEmptyViewProgress()
+                    mView?.dismissReloadProgress()
 
                     if (mEvents == null) {
                         if (isFistTime || mEvents == null || mEvents!!.isEmpty()) {
                             val apiException = ApiException.from(error)
-                            view?.showErrorView(apiException.name, apiException.text)
-                            view?.hideEvents()
+                            mView?.showErrorView(apiException.name, apiException.text)
+                            mView?.hideEvents()
                         } else {
-                            view?.showError(error)
+                            mView?.showError(error)
                         }
                     } else {
                         val apiException = ApiException.from(error)
-                        view?.showErrorToast(apiException.text)
+                        mView?.showErrorToast(apiException.text)
                     }
                 })
 
-        compositeSubscription?.add(subscription)
+        mCompositeSubscription?.add(subscription)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         //        dest.writeParcelable(this.mDateManager, flags)

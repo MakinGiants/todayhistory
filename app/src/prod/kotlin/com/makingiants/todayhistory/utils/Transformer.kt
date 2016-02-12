@@ -1,8 +1,8 @@
 package com.makingiants.todayhistory.utils
 
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Transforms to avoid setting each Schedulers on each call.
@@ -10,9 +10,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
  * observable.compose(applyIoSchedulers())
  */
-
 object Transformer {
-    inline fun <T> applyIoSchedulers(): Observable.Transformer<T, T> {
+    fun <T> applyIoSchedulers(): Observable.Transformer<T, T> {
         return object : Observable.Transformer<T, T> {
             override fun call(observable: Observable<T>): Observable<T> {
                 return observable.subscribeOn(Schedulers.io())

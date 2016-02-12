@@ -90,8 +90,8 @@ class TodayPresenterTests {
         presenter!!.onCreate(mockedView, mockedEventRepository, mockedNetworkChecker)
         presenter!!.onDestroy()
 
-        assertThat(presenter!!.view).isNull()
-        assertThat(presenter!!.compositeSubscription!!.hasSubscriptions()).isFalse()
+        assertThat(presenter!!.mView).isNull()
+        assertThat(presenter!!.mCompositeSubscription!!.hasSubscriptions()).isFalse()
     }
     //</editor-fold>
 

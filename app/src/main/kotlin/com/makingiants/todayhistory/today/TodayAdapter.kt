@@ -21,19 +21,10 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
         val event = mEvents!![position]
 
-
         holder.itemView.titleTextView.text = event.title
         holder.itemView.dateTextView.text = event.date
 
         mPicasso.load(event.imageUrl).fit().into(holder.itemView.image)
-
-        //mPicasso.load(event.getImageUrl())
-        //    .fit()
-        //    .into(holder.headerImage, PicassoPalette.with(event.getImageUrl(), holder.headerImage)
-        //        .use(PicassoPalette.Profile.VIBRANT)
-        //        .intoBackground(holder.textLinearLayout)
-        //        .intoTextColor(holder.dateTextView, PicassoPalette.Swatch.BODY_TEXT_COLOR)
-        //        .intoTextColor(holder.titleTextView, PicassoPalette.Swatch.TITLE_TEXT_COLOR));
     }
 
     fun setEvents(events: List<Event>) {
@@ -41,9 +32,9 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = if (mEvents == null) 0 else mEvents!!.size
+    override fun getItemCount(): Int = mEvents?.size ?: 0
 
-    class SongViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 }
