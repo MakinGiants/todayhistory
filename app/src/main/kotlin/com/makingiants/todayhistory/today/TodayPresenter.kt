@@ -12,17 +12,12 @@ import com.makingiants.todayhistory.utils.Transformer
 import rx.subscriptions.CompositeSubscription
 import java.util.*
 
-open class TodayPresenter : Parcelable {
+open class TodayPresenter(var dateManager: DateManager) : Parcelable {
     @VisibleForTesting var mCompositeSubscription: CompositeSubscription? = null
     @VisibleForTesting var mView: TodayView? = null
     private var mHistoryRepository: HistoryRepository? = null
     private var mNetworkChecker: NetworkChecker? = null
-    private var mDateManager: DateManager? = null
     private var mEvents: List<Event>? = null
-
-    constructor(dateManager: DateManager) : super() {
-        mDateManager = dateManager
-    }
 
     fun onCreate(view: TodayView, historyRepository: HistoryRepository,
                  networkChecker: NetworkChecker) {
@@ -63,7 +58,7 @@ open class TodayPresenter : Parcelable {
             mView?.showReloadProgress()
         }
 
-        val subscription = mHistoryRepository!!.get(mDateManager!!.getTodayDay(), mDateManager!!.getTodayMonth())
+        val subscription = mHistoryRepository!!.get(dateManager.getTodayDay(), dateManager.getTodayMonth())
                 .compose(Transformer.applyIoSchedulers<List<Event>>())
                 .subscribe({ events: List<Event> ->
                     mView?.hideErrorView()
@@ -93,7 +88,7 @@ open class TodayPresenter : Parcelable {
                             mView?.showErrorView(apiException.name, apiException.text)
                             mView?.hideEvents()
                         } else {
-                            mView?.showError(error)
+                            mView?.showErrorDialog(error)
                         }
                     } else {
                         val apiException = ApiException.from(error)
@@ -107,12 +102,12 @@ open class TodayPresenter : Parcelable {
     override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        //        dest.writeParcelable(this.mDateManager, flags)
+        dest.writeParcelable(this.dateManager, flags)
         dest.writeList(this.mEvents)
     }
 
-    protected constructor(parcel: Parcel) {
-        //        this.mDateManager = parcel.readParcelable<DateManager>(DateManager::class.java!!.getClassLoader())
+    constructor(parcel: Parcel) :
+    this(parcel.readParcelable<DateManager>(DateManager::class.java.classLoader)) {
         this.mEvents = ArrayList<Event>()
         parcel.readList(this.mEvents, List::class.java.getClassLoader())
     }

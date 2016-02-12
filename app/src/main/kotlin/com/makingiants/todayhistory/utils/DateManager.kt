@@ -4,20 +4,15 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.*
 
-interface DateManager {
-    fun getTodayDay(): Int
-    fun getTodayMonth(): Int
-}
-
-open class AndroidDateManager : Parcelable, DateManager {
+open class DateManager : Parcelable {
     internal var mCalendar: Calendar
 
     constructor() {
         mCalendar = Calendar.getInstance()
     }
 
-    override fun getTodayDay(): Int = mCalendar.get(Calendar.DAY_OF_MONTH)
-    override fun getTodayMonth(): Int = mCalendar.get(Calendar.MONTH)
+    open fun getTodayDay(): Int = mCalendar.get(Calendar.DAY_OF_MONTH)
+    open fun getTodayMonth(): Int = mCalendar.get(Calendar.MONTH)
 
     //<editor-fold desc="Parcelable">
     override fun describeContents(): Int {
@@ -35,7 +30,7 @@ open class AndroidDateManager : Parcelable, DateManager {
     companion object {
         val CREATOR: Parcelable.Creator<DateManager> = object : Parcelable.Creator<DateManager> {
             override fun createFromParcel(source: Parcel): DateManager {
-                return com.makingiants.todayhistory.utils.AndroidDateManager(source)
+                return com.makingiants.todayhistory.utils.DateManager(source)
             }
 
             override fun newArray(size: Int): Array<out DateManager?> = arrayOfNulls(size)

@@ -1,6 +1,5 @@
 package com.makingiants.todayhistory.base
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.support.annotation.Nullable
@@ -13,10 +12,8 @@ import com.makingiants.today.api.error_handling.ApiException
 import com.makingiants.todayhistory.R
 import icepick.Icepick
 import timber.log.Timber
-import java.lang.ref.WeakReference
 
 open class BaseActivityView : AppCompatActivity() {
-    protected var mProgressWeakReference: WeakReference<ProgressDialog>? = null
     protected var mToolbar: Toolbar? = null
 
     //<editor-fold desc="Toolbar">
@@ -100,26 +97,17 @@ open class BaseActivityView : AppCompatActivity() {
     //</editor-fold>
 
     //<editor-fold desc="Error Management">
-    fun getErrorTitle(@Nullable title: String?): String {
-        return title ?: getString(R.string.error_dialog_title)
-    }
-
-    fun getErrorMessage(@Nullable message: String?): String {
-        return message ?: getString(R.string.error_dialog_message)
-    }
-
-    fun showError(throwable: Throwable) {
-        var message: String? = null
-        var title: String? = null
+    open fun showError(throwable: Throwable) {
+        val message: String
+        val title: String
         if (throwable is ApiException) {
-            message = throwable.message
+            message = throwable.message ?: getString(R.string.error_dialog_message)
             title = throwable.name
         } else {
+            title = getString(R.string.error_dialog_title)
+            message = getString(R.string.error_dialog_message)
             Timber.i("Error is not an ApiException.")
         }
-
-        title = getErrorTitle(title)
-        message = getErrorMessage(message)
 
         buildDialog(title, message).setPositiveButton(R.string.dialog_button_ok, null).show()
     }

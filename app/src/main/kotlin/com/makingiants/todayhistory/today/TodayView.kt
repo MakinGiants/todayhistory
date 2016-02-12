@@ -1,28 +1,29 @@
 package com.makingiants.todayhistory.today
 
 import com.makingiants.today.api.repository.history.pojo.Event
-import com.makingiants.todayhistory.base.BaseActivityView
 
-abstract class TodayView : BaseActivityView() {
-    abstract fun showEvents(events: List<Event>)
+interface TodayView {
+    fun showEvents(events: List<Event>)
 
-    abstract fun hideEvents()
+    fun hideEvents()
 
-    abstract fun showEmptyViewProgress()
+    fun showEmptyViewProgress()
 
-    abstract fun dismissEmptyViewProgress()
+    fun dismissEmptyViewProgress()
 
-    abstract fun dismissReloadProgress()
+    fun dismissReloadProgress()
 
-    abstract fun showEmptyView()
+    fun showEmptyView()
 
-    abstract fun hideEmptyView()
+    fun hideEmptyView()
 
-    abstract fun showReloadProgress()
+    fun showReloadProgress()
 
-    abstract fun showErrorView(title: String, message: String)
+    fun showErrorView(title: String, message: String)
 
-    abstract fun hideErrorView()
+    fun hideErrorView()
 
-    abstract fun showErrorToast(message: String)
+    fun showErrorToast(message: String)
+
+    fun showErrorDialog(throwable: Throwable)
 }

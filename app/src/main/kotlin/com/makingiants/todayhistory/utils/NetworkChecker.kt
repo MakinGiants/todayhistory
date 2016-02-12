@@ -4,11 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import timber.log.Timber
 
-interface NetworkChecker {
-    fun isNetworkConnectionAvailable(): Boolean
-}
-
-open class NetworkCheckerImpl(context: Context) : NetworkChecker {
+open class NetworkChecker(context: Context) {
 
     private val mConnectivityManager: ConnectivityManager
 
@@ -19,7 +15,7 @@ open class NetworkCheckerImpl(context: Context) : NetworkChecker {
     /**
      * https://gist.github.com/A7maDev/427694dcae675435ce53
      */
-    override fun isNetworkConnectionAvailable(): Boolean {
+    open fun isNetworkConnectionAvailable(): Boolean {
         try {
             val networkInfo = mConnectivityManager.activeNetworkInfo
             return networkInfo != null && networkInfo.isConnected && networkInfo.isAvailable
