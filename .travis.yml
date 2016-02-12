@@ -1,8 +1,5 @@
 language: android
 
-jdk:
-  - oraclejdk7
-
 android:
   licenses:
     - 'android-sdk-license-.+'
@@ -15,9 +12,6 @@ android:
     - extra-android-m2repository
 
 before_install:
-  - echo "MAVEN_OPTS='-Xmx4096m -XX:MaxPermSize=1024m'" > ~/.mavenrc
-  - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
-  - export JAVA_HOME=$JAVA7_HOME
   - chmod +x gradlew
 
 script:
