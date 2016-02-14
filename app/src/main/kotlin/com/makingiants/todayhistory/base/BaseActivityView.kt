@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar
 import android.widget.Toast
 import com.makingiants.today.api.error_handling.ApiException
 import com.makingiants.todayhistory.R
-import icepick.Icepick
 import timber.log.Timber
 
 open class BaseActivityView : AppCompatActivity() {
@@ -41,12 +40,6 @@ open class BaseActivityView : AppCompatActivity() {
         val className = javaClass.getSimpleName()
         Timber.tag(className)
         Timber.d("(ActivityFlow) -> %s Created", className)
-        Icepick.restoreInstanceState(this, savedInstanceState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        Icepick.saveInstanceState(this, outState)
     }
 
     @CallSuper

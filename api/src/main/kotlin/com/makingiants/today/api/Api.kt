@@ -3,7 +3,7 @@ package com.makingiants.today.api
 import android.content.Context
 import android.support.annotation.IntDef
 import android.support.annotation.VisibleForTesting
-import com.google.gson.FieldNamingPolicy
+import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.makingiants.today.api.error_handling.ApiErrorHandler
@@ -29,14 +29,12 @@ object Api {
     const val LOG_LEVEL_BASIC = 1L
     const val LOG_LEVEL_FULL = 2L
 
-    private var sRestAdapter: RestAdapter? = null
-
-    private var mLogLevel = LOG_LEVEL_NONE
-
     @IntDef(LOG_LEVEL_NONE, LOG_LEVEL_BASIC, LOG_LEVEL_FULL)
     @Retention(AnnotationRetention.SOURCE)
     annotation class LogLevel
 
+    private var sRestAdapter: RestAdapter? = null
+    private var mLogLevel = LOG_LEVEL_NONE
     private var mWeakContext: WeakReference<Context>? = null
 
     //<editor-fold desc="Init">
@@ -57,20 +55,13 @@ object Api {
     fun <T> create(service: Class<T>): T? = sRestAdapter?.create(service)
 
     @VisibleForTesting
-    fun gson(): Gson =
-            GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+    fun gson(): Gson = GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create()
 
     val adapterLogLevel: RestAdapter.LogLevel
-        get() {
-            if (mLogLevel == LOG_LEVEL_NONE) {
-                return RestAdapter.LogLevel.NONE
-            } else if (mLogLevel == LOG_LEVEL_BASIC) {
-                return RestAdapter.LogLevel.BASIC
-            } else if (mLogLevel == LOG_LEVEL_FULL) {
-                return RestAdapter.LogLevel.FULL
-            } else {
-                return RestAdapter.LogLevel.NONE
-            }
+        get() = when (mLogLevel) {
+            LOG_LEVEL_BASIC -> RestAdapter.LogLevel.BASIC
+            LOG_LEVEL_FULL -> RestAdapter.LogLevel.FULL
+            else -> RestAdapter.LogLevel.NONE
         }
 
     //</editor-fold>

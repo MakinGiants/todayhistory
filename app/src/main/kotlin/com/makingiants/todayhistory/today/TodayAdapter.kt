@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.florent37.picassopalette.BitmapPalette
+import com.github.florent37.picassopalette.PicassoPalette
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.R
 import com.squareup.picasso.Picasso
@@ -24,7 +26,15 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
         holder.itemView.titleTextView.text = event.title
         holder.itemView.dateTextView.text = event.date
 
-        mPicasso.load(event.imageUrl).fit().into(holder.itemView.image)
+        mPicasso.load(event.imageUrl)
+                .placeholder(R.color.material_grey_600)
+                .fit()
+                .centerInside()
+                .into(holder.itemView.image,
+                        PicassoPalette.with(event.imageUrl, holder.itemView.image)
+                                .use(BitmapPalette.Profile.VIBRANT_DARK)
+                                .intoBackground(holder.itemView.image))
+
     }
 
     fun setEvents(events: List<Event>) {

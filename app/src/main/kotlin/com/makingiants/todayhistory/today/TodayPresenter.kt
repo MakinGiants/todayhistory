@@ -103,7 +103,10 @@ open class TodayPresenter(var dateManager: DateManager) : Parcelable {
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeParcelable(this.dateManager, flags)
-        dest.writeList(this.mEvents)
+
+        if (mEvents != null) {
+            dest.writeList(this.mEvents)
+        }
     }
 
     constructor(parcel: Parcel) :
