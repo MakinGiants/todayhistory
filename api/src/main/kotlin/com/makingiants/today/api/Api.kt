@@ -34,10 +34,8 @@ object Api {
     annotation class LogLevel
 
     private var sRestAdapter: RestAdapter? = null
-    private var mLogLevel = LOG_LEVEL_NONE
     private var mWeakContext: WeakReference<Context>? = null
 
-    //<editor-fold desc="Init">
     fun init(context: Context, host: String, @LogLevel logLevel: Long = LOG_LEVEL_NONE) {
         val okHttpClient = OkHttpClient()
         okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS) // Initial value: 10
@@ -45,24 +43,22 @@ object Api {
         okHttpClient.setReadTimeout(30, TimeUnit.SECONDS)
 
         mWeakContext = WeakReference(context)
-        sRestAdapter = RestAdapter.Builder().setEndpoint(host).setClient(OkClient(okHttpClient)).setConverter(GsonConverter(gson())).setErrorHandler(ApiErrorHandler()).build()
+        sRestAdapter = RestAdapter.Builder()
+                .setEndpoint(host)
+                .setClient(OkClient(okHttpClient))
+                .setConverter(GsonConverter(gson()))
+                .setErrorHandler(ApiErrorHandler())
+                .build()
 
-        this.mLogLevel = logLevel
-        // Refresh logLevel because maybe rest adapter was null before it is setted.
-        sRestAdapter?.setLogLevel(adapterLogLevel)
+        sRestAdapter?.setLogLevel(when (logLevel) {
+            LOG_LEVEL_BASIC -> RestAdapter.LogLevel.BASIC
+            LOG_LEVEL_FULL -> RestAdapter.LogLevel.FULL
+            else -> RestAdapter.LogLevel.NONE
+        })
     }
 
     fun <T> create(service: Class<T>): T? = sRestAdapter?.create(service)
 
     @VisibleForTesting
     fun gson(): Gson = GsonBuilder().setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES).create()
-
-    val adapterLogLevel: RestAdapter.LogLevel
-        get() = when (mLogLevel) {
-            LOG_LEVEL_BASIC -> RestAdapter.LogLevel.BASIC
-            LOG_LEVEL_FULL -> RestAdapter.LogLevel.FULL
-            else -> RestAdapter.LogLevel.NONE
-        }
-
-    //</editor-fold>
 }

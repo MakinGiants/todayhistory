@@ -19,12 +19,12 @@ def appVersionName = "0.1.0"
 def appVersionCode = 1
 
 android {
-  compileSdkVersion setup.sdkVersion
-  buildToolsVersion setup.buildToolsVersion
+  compileSdkVersion setup.targetSdk
+  buildToolsVersion setup.buildTools
 
   defaultConfig {
-    minSdkVersion setup.minSdkVersion
-    targetSdkVersion setup.sdkVersion
+    minSdkVersion setup.minSdk
+    targetSdkVersion setup.targetSdk
     versionCode appVersionCode
     versionName appVersionName
   }
@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-  compile "com.android.support:appcompat-v7:$deps.supportLibVersion"
+  compile "com.android.support:appcompat-v7:$deps.supportLib"
   compile "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlin"
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup.okhttp:okhttp:2.5.0'

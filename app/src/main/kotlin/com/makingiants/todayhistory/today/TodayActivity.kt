@@ -2,10 +2,13 @@ package com.makingiants.todayhistory.today
 
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.google.android.gms.ads.AdRequest
 import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
+import com.makingiants.todayhistory.BuildConfig
 import com.makingiants.todayhistory.R
 import com.makingiants.todayhistory.base.BaseActivityView
 import com.makingiants.todayhistory.utils.DateManager
@@ -28,18 +31,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
         setContentView(R.layout.today_activity)
         activateToolbar(R.string.title_activity_today)
 
-        mAdapter = TodayAdapter(Picasso.with(applicationContext))
-
-        recyclerView.setAdapter(mAdapter)
-        recyclerView.setLayoutManager(LinearLayoutManager(applicationContext))
-        recyclerView.addItemDecoration(SpacesItemDecoration(16))
-
-        swipeRefreshLayout.setOnRefreshListener(this)
-        swipeRefreshLayout.setScrollEnabler(this)
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
-
         mPresenter = savedInstanceState?.getParcelable(PARCEL_PRESENTER) ?: TodayPresenter(DateManager())
-
         mPresenter?.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
     }
 
@@ -58,6 +50,31 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     //</editor-fold>
 
     //<editor-fold desc="TodayView">
+    override fun initViews() {
+        mAdapter = TodayAdapter(Picasso.with(applicationContext))
+
+        recyclerView.adapter = mAdapter
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        recyclerView.addItemDecoration(SpacesItemDecoration(16))
+
+        swipeRefreshLayout.setOnRefreshListener(this)
+        swipeRefreshLayout.setScrollEnabler(this)
+        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
+
+        val adRequest: AdRequest
+        if (BuildConfig.DEBUG) {
+            adRequest = AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("027c6ee5571a8376")
+                    .build();
+        } else {
+            adRequest = AdRequest.Builder().build();
+        }
+        
+        adsView.loadAd(adRequest);
+    }
+
     override fun showEvents(events: List<Event>) {
         recyclerView?.setVisibility(View.VISIBLE)
         mAdapter?.setEvents(events)

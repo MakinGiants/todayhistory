@@ -12,6 +12,8 @@ android:
     - tools
     - build-tools-23.0.2
     - android-23
+    - extra-google-m2repository
+    - extra-google-google_play_services
     - extra-android-support
     - extra-android-m2repository
 
@@ -24,6 +26,7 @@ before_install:
 script:
     - echo "apiKey=$FABRIC_API_KEY" >> app/fabric.properties
     - echo "apiSecret=$FABRIC_API_SECRET" >> app/fabric.properties
+    - echo "TODAY_ADS_UNIT_ID_BANNER=ADS_UNIT_ID_BANNER" >> app/gradle.properties
     - ./gradlew testMockedDebug --stacktrace
 
 before_cache:

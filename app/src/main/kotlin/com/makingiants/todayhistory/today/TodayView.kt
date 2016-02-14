@@ -3,6 +3,8 @@ package com.makingiants.todayhistory.today
 import com.makingiants.today.api.repository.history.pojo.Event
 
 interface TodayView {
+    fun initViews()
+
     fun showEvents(events: List<Event>)
 
     fun hideEvents()
