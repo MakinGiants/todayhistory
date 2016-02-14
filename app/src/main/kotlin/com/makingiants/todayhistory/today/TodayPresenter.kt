@@ -26,6 +26,8 @@ open class TodayPresenter(var dateManager: DateManager) : Parcelable {
         mNetworkChecker = networkChecker
         mCompositeSubscription = CompositeSubscription()
 
+        view.initViews()
+
         if (mEvents == null) {
             loadEvents(true)
         } else {

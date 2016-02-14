@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:ads="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -113,4 +114,14 @@
     </FrameLayout>
 
   </com.makingiants.todayhistory.utils.refresh_layout.CustomScrollSwipeRefreshLayout>
+
+
+  <com.google.android.gms.ads.AdView
+    android:id="@+id/adsView"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_marginTop="@dimen/spacing_medium"
+    ads:adSize="BANNER"
+    ads:adUnitId="@string/ads_unit_id_banner" />
 </RelativeLayout>

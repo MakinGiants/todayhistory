@@ -1,10 +1,11 @@
 buildscript {
-  ext.deps = [kotlin           : "1.0.0-rc-1036",
-              supportLibVersion: "23.1.1"]
+  ext.deps = [kotlin      : "1.0.0-rc-1036",
+              supportLib  : "23.1.1",
+              playServices: "8.4.0"]
 
-  ext.setup = [sdkVersion       : 23,
-               minSdkVersion    : 15,
-               buildToolsVersion: "23.0.2"]
+  ext.setup = [targetSdk       : 23,
+               minSdk    : 15,
+               buildTools: "23.0.2"]
 
   repositories {
     jcenter()
