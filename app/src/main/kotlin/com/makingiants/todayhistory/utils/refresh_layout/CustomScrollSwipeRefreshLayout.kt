@@ -1,7 +1,6 @@
 package com.makingiants.todayhistory.utils.refresh_layout
 
 import android.content.Context
-import android.support.annotation.Nullable
 import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 
@@ -10,9 +9,9 @@ import android.util.AttributeSet
  * It's usefull when the mView have multiple inner views that are not inside a [ScrollView]
  */
 class CustomScrollSwipeRefreshLayout(context: Context, attrs: AttributeSet) : SwipeRefreshLayout(context, attrs) {
-    @Nullable private var mScrollEnabler: ScrollEnabler? = null
+    private var mScrollEnabler: ScrollEnabler? = null
 
-    fun setScrollEnabler(@Nullable scrollEnabler: ScrollEnabler?) {
+    fun setScrollEnabler(scrollEnabler: ScrollEnabler?) {
         mScrollEnabler = scrollEnabler
     }
 

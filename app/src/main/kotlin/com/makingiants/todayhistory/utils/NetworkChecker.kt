@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import timber.log.Timber
 
 open class NetworkChecker(context: Context) {
-
     private val mConnectivityManager: ConnectivityManager
 
     init {

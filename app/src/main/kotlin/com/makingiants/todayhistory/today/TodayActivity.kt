@@ -13,11 +13,12 @@ import com.makingiants.todayhistory.utils.NetworkChecker
 import com.makingiants.todayhistory.utils.SpacesItemDecoration
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler
 import com.squareup.picasso.Picasso
-import icepick.State
 import kotlinx.android.synthetic.main.today_activity.*
 
 class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
-    @State var mPresenter: TodayPresenter? = null
+    val PARCEL_PRESENTER = "presenter"
+
+    var mPresenter: TodayPresenter? = null
     private var mAdapter: TodayAdapter? = null
 
     //<editor-fold desc="Activity">
@@ -37,11 +38,14 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
         swipeRefreshLayout.setScrollEnabler(this)
         swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
 
-        if (mPresenter == null) {
-            mPresenter = TodayPresenter(DateManager())
-        }
+        mPresenter = savedInstanceState?.getParcelable(PARCEL_PRESENTER) ?: TodayPresenter(DateManager())
 
         mPresenter?.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState?.putParcelable(PARCEL_PRESENTER, mPresenter)
     }
 
     override fun onDestroy() {
@@ -94,7 +98,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     }
 
     override fun showEmptyView() {
-        emptyView?.visibility = View.VISIBLE
+        emptyView.visibility = View.VISIBLE
     }
 
     override fun hideEmptyView() {

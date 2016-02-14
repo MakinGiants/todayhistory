@@ -87,7 +87,6 @@ android {
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
-  maven { url "https://clojars.org/repo/" }
 }
 
 dependencies {
@@ -102,14 +101,12 @@ dependencies {
   compile 'com.github.florent37:picassopalette:1.0.2@aar'
 
   // Management
-  compile 'frankiesardo:icepick:3.1.0'
-  provided 'frankiesardo:icepick-processor:3.1.0'
   compile 'com.jakewharton.timber:timber:4.1.0@aar'
   compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 
+  testCompile "org.jetbrains.kotlin:kotlin-test:$deps.kotlin"
   testCompile 'junit:junit:4.12'
   testCompile "org.mockito:mockito-core:1.10.19"
-  testCompile "org.jetbrains.kotlin:kotlin-test:$deps.kotlin"
   testCompile('com.squareup.assertj:assertj-android:1.1.1') {
     exclude group: 'com.android.support', module: 'support-annotations'
   }
