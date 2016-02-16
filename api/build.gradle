@@ -46,10 +46,19 @@ android {
   }
 }
 
+ext.libDeps = [retrofit: "2.0.0-beta4",
+               okhttp3 : "3.1.2"]
+
 dependencies {
   compile "com.android.support:appcompat-v7:$deps.supportLib"
   compile "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlin"
-  compile 'com.squareup.retrofit:retrofit:1.9.0'
-  compile 'com.squareup.okhttp:okhttp:2.5.0'
+
+  compile "com.squareup.retrofit2:retrofit:$libDeps.retrofit"
+  compile "com.squareup.retrofit2:adapter-rxjava:$libDeps.retrofit"
+  compile "com.squareup.retrofit2:converter-gson:$libDeps.retrofit"
+
+  compile "com.squareup.okhttp3:okhttp:$libDeps.okhttp3"
+  compile "com.squareup.okhttp3:logging-interceptor:$libDeps.okhttp3"
+
   compile 'io.reactivex:rxandroid:1.1.0'
 }
