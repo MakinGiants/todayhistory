@@ -18,6 +18,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
+apply from:'jacoco.gradle'
 
 def appId = "com.makingiants.todayhistory"
 def appVersionName = "0.1.0"
