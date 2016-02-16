@@ -1,8 +1,9 @@
 Today History Android app
 =========================
 
-Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
-Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
+- Build status - Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
+- Build status - Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
+- Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
 
 App that shows what happened today in history writen in Kotlin.
 
