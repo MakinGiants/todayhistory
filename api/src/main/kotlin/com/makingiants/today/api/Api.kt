@@ -6,11 +6,11 @@ import android.support.annotation.VisibleForTesting
 import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.makingiants.today.api.error_handling.ApiErrorHandler
-import com.squareup.okhttp.OkHttpClient
-import retrofit.RestAdapter
-import retrofit.client.OkClient
-import retrofit.converter.GsonConverter
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.ref.WeakReference
 import java.util.concurrent.TimeUnit
 
@@ -33,28 +33,33 @@ object Api {
     @Retention(AnnotationRetention.SOURCE)
     annotation class LogLevel
 
-    private var sRestAdapter: RestAdapter? = null
+    private var sRestAdapter: Retrofit? = null
     private var mWeakContext: WeakReference<Context>? = null
 
     fun init(context: Context, host: String, @LogLevel logLevel: Long = LOG_LEVEL_NONE) {
-        val okHttpClient = OkHttpClient()
-        okHttpClient.setConnectTimeout(30, TimeUnit.SECONDS) // Initial value: 10
-        okHttpClient.setWriteTimeout(30, TimeUnit.SECONDS)
-        okHttpClient.setReadTimeout(30, TimeUnit.SECONDS)
+        val httpBuilder = OkHttpClient.Builder().apply {
+            connectTimeout(30, TimeUnit.SECONDS)
+            writeTimeout(30, TimeUnit.SECONDS)
+            readTimeout(30, TimeUnit.SECONDS)
 
+            addInterceptor(HttpLoggingInterceptor().apply {
+                level = when (logLevel) {
+                    LOG_LEVEL_BASIC -> HttpLoggingInterceptor.Level.BASIC
+                    LOG_LEVEL_FULL -> HttpLoggingInterceptor.Level.BODY
+                    else -> HttpLoggingInterceptor.Level.NONE
+                }
+            })
+        }
+
+        val fixedHost = if (host.endsWith("/")) host else "$host/"
         mWeakContext = WeakReference(context)
-        sRestAdapter = RestAdapter.Builder()
-                .setEndpoint(host)
-                .setClient(OkClient(okHttpClient))
-                .setConverter(GsonConverter(gson()))
-                .setErrorHandler(ApiErrorHandler())
-                .build()
 
-        sRestAdapter?.setLogLevel(when (logLevel) {
-            LOG_LEVEL_BASIC -> RestAdapter.LogLevel.BASIC
-            LOG_LEVEL_FULL -> RestAdapter.LogLevel.FULL
-            else -> RestAdapter.LogLevel.NONE
-        })
+        sRestAdapter = Retrofit.Builder()
+                .baseUrl(fixedHost)
+                .client(httpBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create(gson()))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
     }
 
     fun <T> create(service: Class<T>): T? = sRestAdapter?.create(service)

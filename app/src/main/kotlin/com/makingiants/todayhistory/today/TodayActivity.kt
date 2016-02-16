@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.today_activity.*
 
 class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
     val PARCEL_PRESENTER = "presenter"
-
     var mPresenter: TodayPresenter? = null
     private var mAdapter: TodayAdapter? = null
 
@@ -44,8 +43,10 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
         super.onDestroy()
         mPresenter?.onDestroy()
 
-        swipeRefreshLayout?.setScrollEnabler(null)
-        swipeRefreshLayout?.setOnRefreshListener(null)
+        swipeRefreshLayout?.apply {
+            setScrollEnabler(null)
+            setOnRefreshListener(null)
+        }
     }
     //</editor-fold>
 
@@ -53,14 +54,18 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     override fun initViews() {
         mAdapter = TodayAdapter(Picasso.with(applicationContext))
 
-        recyclerView.adapter = mAdapter
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        recyclerView.itemAnimator = DefaultItemAnimator()
-        recyclerView.addItemDecoration(SpacesItemDecoration(16))
+        recyclerView.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(applicationContext)
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(SpacesItemDecoration(16))
+        }
 
-        swipeRefreshLayout.setOnRefreshListener(this)
-        swipeRefreshLayout.setScrollEnabler(this)
-        swipeRefreshLayout.setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
+        swipeRefreshLayout.apply {
+            setOnRefreshListener(this@TodayActivity)
+            setScrollEnabler(this@TodayActivity)
+            setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
+        }
 
         val adRequest: AdRequest
         if (BuildConfig.DEBUG) {
@@ -71,7 +76,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
         } else {
             adRequest = AdRequest.Builder().build();
         }
-        
+
         adsView.loadAd(adRequest);
     }
 
