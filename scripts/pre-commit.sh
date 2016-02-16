@@ -15,7 +15,7 @@ ABSOLUTE_PATH=$(cd `dirname "${BASH_SOURCE[0]}"`)
 ABSOLUTE_PARENT_PATH="$(dirname "$ABSOLUTE_PATH")"
 
 # run the tests with the gradle wrapper
-sh $ABSOLUTE_PARENT_PATH/gradlew testMockedDebug testMockedRelease --daemon -PmaxParallelForks=10
+sh $ABSOLUTE_PARENT_PATH/gradlew clean testMockedReleaseUnitTestCoverage --daemon -PmaxParallelForks=10
 
 # store the last exit code in a variable
 RESULT=$?
