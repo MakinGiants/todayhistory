@@ -32,7 +32,7 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
                 .centerInside()
                 .into(holder.itemView.image,
                         PicassoPalette.with(event.imageUrl, holder.itemView.image)
-                                .use(BitmapPalette.Profile.VIBRANT_DARK)
+                                .use(BitmapPalette.Profile.MUTED_DARK)
                                 .intoBackground(holder.itemView.image))
 
     }
