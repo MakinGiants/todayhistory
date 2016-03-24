@@ -45,8 +45,6 @@ android {
     buildConfigField "String", "HOST", "\"http://day-in-history.herokuapp.com\""
     buildConfigField "String", "GIT_SHA", "\"STATIC_FOR_PERFORMANCE\""
     buildConfigField "boolean", "ANALYTICS_ENABLED", "false"
-
-    resValue "string", "ads_unit_id_banner", "${TODAY_ADS_UNIT_ID_BANNER}"
   }
   buildTypes {
     debug {
@@ -89,7 +87,6 @@ dependencies {
   compile "com.android.support:design:$deps.supportLib"
   compile "com.android.support:cardview-v7:$deps.supportLib"
   compile "com.android.support:palette-v7:$deps.supportLib"
-  compile "com.google.android.gms:play-services-ads:${deps.playServices}"
   compile "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlin"
 
   compile project(':api')
