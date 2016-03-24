@@ -18,7 +18,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
-apply from:'jacoco.gradle'
+apply from: 'jacoco.gradle'
 
 def appId = "com.makingiants.todayhistory"
 def appVersionName = "0.1.0"
@@ -66,17 +66,8 @@ android {
     prod
     mocked
   }
-  testOptions {
-    unitTests.all {
-      jvmArgs "-XX:MaxPermSize=2048m"
-
-      beforeTest { descriptor -> logger.lifecycle("Running test: " + descriptor)
-      }
-    }
-  }
 
   lintOptions {
-    fatal 'UnusedResources'
     abortOnError false
   }
 

@@ -1,9 +1,8 @@
 buildscript {
-  ext.deps = [kotlin      : "1.0.0",
-              supportLib  : "23.1.1",
-              playServices: "8.4.0"]
+  ext.deps = [kotlin    : "1.0.1",
+              supportLib: "23.2.0"]
 
-  ext.setup = [targetSdk       : 23,
+  ext.setup = [targetSdk : 23,
                minSdk    : 15,
                buildTools: "23.0.2"]
 
@@ -11,7 +10,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.0.0-beta4'
+    classpath 'com.android.tools.build:gradle:2.0.0-beta6'
   }
 }
 
