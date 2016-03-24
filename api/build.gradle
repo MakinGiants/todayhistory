@@ -27,6 +27,7 @@ android {
     targetSdkVersion setup.targetSdk
     versionCode appVersionCode
     versionName appVersionName
+    consumerProguardFiles 'proguard-rules.pro'
   }
   buildTypes {
     release {

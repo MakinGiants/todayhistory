@@ -15,10 +15,11 @@ import com.makingiants.todayhistory.utils.SpacesItemDecoration
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.today_activity.*
+import timber.log.Timber
 
 class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
-    var mPresenter: TodayPresenter = TodayPresenter(DateManager())
-    private val mAdapter: TodayAdapter by lazy { TodayAdapter(Picasso.with(applicationContext)) }
+    val mPresenter: TodayPresenter by lazy { TodayPresenter(DateManager()) }
+    val mAdapter: TodayAdapter by lazy { TodayAdapter(Picasso.with(applicationContext)) }
 
     //<editor-fold desc="Activity">
 
@@ -27,6 +28,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
         setContentView(R.layout.today_activity)
         activateToolbar(R.string.app_name)
 
+        Timber.tag("TodayActivity")
         mPresenter.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
     }
 
@@ -56,7 +58,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     }
 
     override fun showEvents(events: List<Event>) {
-        recyclerView.setVisibility(View.VISIBLE)
+        recyclerView.visibility = View.VISIBLE
         mAdapter.setEvents(events)
     }
 

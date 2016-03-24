@@ -1,7 +1,5 @@
 package com.makingiants.todayhistory.base
 
-import android.os.Bundle
-import android.support.annotation.CallSuper
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
@@ -31,45 +29,6 @@ open class BaseActivityView : AppCompatActivity() {
         }
         return mToolbar
     }
-    //</editor-fold>
-
-    //<editor-fold desc="Activity life cycle Overrides">
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val className = javaClass.getSimpleName()
-        Timber.tag(className)
-        Timber.d("(ActivityFlow) -> %s Created", className)
-    }
-
-    @CallSuper
-    override fun onResume() {
-        val className = javaClass.getSimpleName()
-        Timber.tag(className)
-        Timber.d("(ActivityFlow) -> %s Resumed", className)
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Timber.d("(ActivityFlow) == %s Paused", javaClass.getSimpleName())
-        super.onPause()
-    }
-
-    override fun onStart() {
-        Timber.d("(ActivityFlow) !! %s Started", javaClass.getSimpleName())
-        super.onStart()
-    }
-
-    override fun onStop() {
-        Timber.d("(ActivityFlow) :O %s Stopped", javaClass.getSimpleName())
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Timber.d("(ActivityFlow) X( %s Destroyed", javaClass.getSimpleName())
-        super.onDestroy()
-    }
-
     //</editor-fold>
 
     //<editor-fold desc="Alert Dialogs">
