@@ -47,8 +47,8 @@ android {
   }
 }
 
-ext.libDeps = [retrofit: "2.0.0-beta4",
-               okhttp3 : "3.1.2"]
+ext.libDeps = [retrofit: "2.0.0",
+               okhttp3 : "3.2.0"]
 
 dependencies {
   compile "com.android.support:appcompat-v7:$deps.supportLib"
