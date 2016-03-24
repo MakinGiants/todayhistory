@@ -1,6 +1,5 @@
 <resources>
   <string name="app_name">Today History</string>
-  <string name="title_activity_today">Today</string>
 
   <string name="dialog_button_ok">OK</string>
 

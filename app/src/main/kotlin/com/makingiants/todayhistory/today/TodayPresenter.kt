@@ -1,7 +1,5 @@
 package com.makingiants.todayhistory.today
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.annotation.VisibleForTesting
 import com.makingiants.today.api.error_handling.ApiException
 import com.makingiants.today.api.repository.history.HistoryRepository
@@ -10,9 +8,8 @@ import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
 import com.makingiants.todayhistory.utils.Transformer
 import rx.subscriptions.CompositeSubscription
-import java.util.*
 
-open class TodayPresenter(var dateManager: DateManager) : Parcelable {
+open class TodayPresenter(var dateManager: DateManager) {
     @VisibleForTesting var mCompositeSubscription: CompositeSubscription? = null
     @VisibleForTesting var mView: TodayView? = null
     private var mHistoryRepository: HistoryRepository? = null
@@ -37,15 +34,15 @@ open class TodayPresenter(var dateManager: DateManager) : Parcelable {
 
     fun onDestroy() {
         mView = null
+        mHistoryRepository = null
+        mNetworkChecker = null
 
         if (mCompositeSubscription?.hasSubscriptions() ?: false) {
             mCompositeSubscription?.unsubscribe()
         }
     }
 
-    fun updateItems() {
-        loadEvents()
-    }
+    fun onRefresh() = loadEvents()
 
     @VisibleForTesting
     fun loadEvents(isFistTime: Boolean = false) {
@@ -99,32 +96,5 @@ open class TodayPresenter(var dateManager: DateManager) : Parcelable {
                 })
 
         mCompositeSubscription?.add(subscription)
-    }
-
-    override fun describeContents(): Int = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeParcelable(this.dateManager, flags)
-
-        if (mEvents != null) {
-            dest.writeList(this.mEvents)
-        }
-    }
-
-    constructor(parcel: Parcel) :
-    this(parcel.readParcelable<DateManager>(DateManager::class.java.classLoader)) {
-        this.mEvents = ArrayList<Event>()
-        parcel.readList(this.mEvents, List::class.java.getClassLoader())
-    }
-
-    companion object {
-        val CREATOR: Parcelable.Creator<TodayPresenter> = object : Parcelable.Creator<TodayPresenter> {
-            override fun createFromParcel(source: Parcel): TodayPresenter {
-                return TodayPresenter(source)
-            }
-
-            override fun newArray(size: Int): Array<out TodayPresenter?> =
-                    arrayOfNulls<TodayPresenter>(size)
-        }
     }
 }

@@ -43,7 +43,7 @@ class TodayPresenterTests {
         val newEvents = events(5)
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents))
         `when`(mockedNetworkChecker.isNetworkConnectionAvailable()).thenReturn(false)
-        presenter.updateItems()
+        presenter.onRefresh()
 
         // Progress is showed by pull to refresh mView automatically
         verify(mockedView).showErrorToast("There is no internet.")
@@ -155,7 +155,7 @@ class TodayPresenterTests {
         `when`(mockedDateManager.getTodayDay()).thenReturn(1)
         `when`(mockedDateManager.getTodayMonth()).thenReturn(2)
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents))
-        presenter.updateItems()
+        presenter.onRefresh()
 
         verify(mockedView).showReloadProgress()
         verify(mockedView, times(2)).dismissReloadProgress()
@@ -178,7 +178,7 @@ class TodayPresenterTests {
 
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.error<List<Event>>(error))
 
-        presenter.updateItems()
+        presenter.onRefresh()
 
         // Progress is showed by pull to refresh mView automatically
         verify(mockedView).showReloadProgress()
@@ -200,7 +200,7 @@ class TodayPresenterTests {
 
         val newEvents = events(5)
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents))
-        presenter.updateItems()
+        presenter.onRefresh()
 
         verify(mockedView).showReloadProgress()
         verify(mockedView, times(2)).dismissReloadProgress()
@@ -221,7 +221,7 @@ class TodayPresenterTests {
 
         val newEvents = events(5)
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents))
-        presenter.updateItems()
+        presenter.onRefresh()
 
         // Progress is showed by pull to refresh mView automatically
         verify(mockedView).showReloadProgress()
@@ -242,7 +242,7 @@ class TodayPresenterTests {
 
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.error<List<Event>>(error))
 
-        presenter.updateItems()
+        presenter.onRefresh()
 
         // Progress is showed by pull to refresh mView automatically
         verify(mockedView).showReloadProgress()
@@ -265,7 +265,7 @@ class TodayPresenterTests {
 
         `when`(mockedEventRepository.get(1, 2)).thenReturn(Observable.just(newEvents))
 
-        presenter.updateItems()
+        presenter.onRefresh()
 
         verify(mockedView).showErrorToast(anyString())
         verify(mockedView).showReloadProgress()

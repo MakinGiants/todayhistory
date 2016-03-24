@@ -6,8 +6,8 @@
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:layout_gravity="center"
-  android:layout_marginLeft="@dimen/margin_activity_horizontal"
-  android:layout_marginRight="@dimen/margin_activity_horizontal"
+  android:layout_marginLeft="@dimen/spacing_medium"
+  android:layout_marginRight="@dimen/spacing_medium"
   android:elevation="@dimen/elevation_down"
   card_view:cardCornerRadius="4dp">
 
