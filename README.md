@@ -1,11 +1,23 @@
 Today History Android app
 =========================
 
-- Build status - Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
-- Build status - Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
-- Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
++ Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
++ Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
++ Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
 
-App that shows what happened today in history writen in Kotlin.
+App that shows what happened today in history.
+
+![sample](img/1.png)
+![sample](img/2.png)
+
+## Details
+- Written in Kotlin.
+- Android Studio 2.1 preview 4.
+- MVP architecture modularized into `api` and `app`.
+- Unit tests for presenters and non android code.
+- Travis tests for pull requests check.
+- Code Coverage show up on pull requests with [codecov.io](https://codecov.io).
+- Proguard setup to minify apk size.
 
 ## License
 
