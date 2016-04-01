@@ -1,14 +1,16 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
+  ext.deps = [kotlin    : "1.0.1",
+              supportLib: "23.2.0"]
+
+  ext.setup = [targetSdk : 23,
+               minSdk    : 15,
+               buildTools: "23.0.2"]
+
   repositories {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.0.0-alpha2'
-
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
+    classpath 'com.android.tools.build:gradle:2.1.0-alpha4'
   }
 }
 
@@ -20,13 +22,4 @@ allprojects {
 
 task clean(type: Delete) {
   delete rootProject.buildDir
-}
-
-ext {
-  sdkVersion = 23
-  minSdkVersion = 15
-  buildToolsVersion = "23.0.2"
-  supportLibVersion = "23.1.1"
-
-  deps = [appCompatV7: "com.android.support:appcompat-v7:${supportLibVersion}"]
 }

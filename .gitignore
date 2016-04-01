@@ -4,6 +4,7 @@ app/fabric.properties
 app/crashlytics.properties
 captures/
 
+*.hprof
 com_crashlytics_export_strings.xml
 
 # Created by https://www.gitignore.io
