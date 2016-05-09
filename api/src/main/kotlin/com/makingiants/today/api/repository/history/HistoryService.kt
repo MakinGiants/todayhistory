@@ -6,6 +6,6 @@ import retrofit2.http.Query
 import rx.Observable
 
 internal interface HistoryService {
-    @GET("main.json")
-    operator fun get(@Query("day") day: Int, @Query("month") month: String): Observable<List<Event>>
+  @GET("main.json")
+  operator fun get(@Query("d") day: String, @Query("m") month: String): Observable<List<Event>>
 }
