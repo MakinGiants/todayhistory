@@ -10,7 +10,7 @@ import rx.schedulers.Schedulers
  * observable.compose(applyIoSchedulers())
  */
 object Transformer {
-    fun <T> applyIoSchedulers(): Observable.Transformer<T, T> = Observable.Transformer<T, T> {
-        it.subscribeOn(Schedulers.immediate()).observeOn(Schedulers.immediate())
-    }
+  fun <T> applyIoSchedulers(): Observable.Transformer<T, T> = Observable.Transformer<T, T> {
+    it.subscribeOn(Schedulers.immediate()).observeOn(Schedulers.immediate())
+  }
 }

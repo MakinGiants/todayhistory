@@ -3,29 +3,29 @@ package com.makingiants.todayhistory.today
 import com.makingiants.today.api.repository.history.pojo.Event
 
 interface TodayView {
-    fun initViews()
+  fun initViews()
 
-    fun showEvents(events: List<Event>)
+  fun showEvents(events: List<Event>)
 
-    fun hideEvents()
+  fun hideEvents()
 
-    fun showEmptyViewProgress()
+  fun showEmptyViewProgress()
 
-    fun dismissEmptyViewProgress()
+  fun dismissEmptyViewProgress()
 
-    fun dismissReloadProgress()
+  fun dismissReloadProgress()
 
-    fun showEmptyView()
+  fun showEmptyView()
 
-    fun hideEmptyView()
+  fun hideEmptyView()
 
-    fun showReloadProgress()
+  fun showReloadProgress()
 
-    fun showErrorView(title: String, message: String)
+  fun showErrorView(title: String, message: String)
 
-    fun hideErrorView()
+  fun hideErrorView()
 
-    fun showErrorToast(message: String)
+  fun showErrorToast(message: String)
 
-    fun showErrorDialog(throwable: Throwable)
+  fun showErrorDialog(throwable: Throwable)
 }

@@ -9,16 +9,16 @@ import android.util.AttributeSet
  * It's usefull when the mView have multiple inner views that are not inside a [ScrollView]
  */
 class CustomScrollSwipeRefreshLayout(context: Context, attrs: AttributeSet) : SwipeRefreshLayout(context, attrs) {
-    private var mScrollEnabler: ScrollEnabler? = null
+  private var mScrollEnabler: ScrollEnabler? = null
 
-    fun setScrollEnabler(scrollEnabler: ScrollEnabler?) {
-        mScrollEnabler = scrollEnabler
-    }
+  fun setScrollEnabler(scrollEnabler: ScrollEnabler?) {
+    mScrollEnabler = scrollEnabler
+  }
 
-    override fun canChildScrollUp(): Boolean {
-        if (mScrollEnabler != null) {
-            return mScrollEnabler!!.canScrollUp()
-        }
-        return super.canChildScrollUp()
+  override fun canChildScrollUp(): Boolean {
+    if (mScrollEnabler != null) {
+      return mScrollEnabler!!.canScrollUp()
     }
+    return super.canChildScrollUp()
+  }
 }

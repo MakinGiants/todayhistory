@@ -26,15 +26,16 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
     holder.itemView.titleTextView.text = event.title
     holder.itemView.dateTextView.text = event.date
 
-    mPicasso.load(event.thumb.src)
-        .placeholder(R.color.material_grey_600)
-        .fit()
-        .centerInside()
-        .into(holder.itemView.image,
-            PicassoPalette.with(event.thumb.src, holder.itemView.image)
-                .use(BitmapPalette.Profile.MUTED_DARK)
-                .intoBackground(holder.itemView.image))
-
+    event.thumb?.src?.let {
+      mPicasso.load(it)
+          .placeholder(R.color.material_grey_600)
+          .fit()
+          .centerInside()
+          .into(holder.itemView.image,
+              PicassoPalette.with(it, holder.itemView.image)
+                  .use(BitmapPalette.Profile.MUTED_DARK)
+                  .intoBackground(holder.itemView.image))
+    }
   }
 
   fun setEvents(events: List<Event>) {
@@ -44,7 +45,5 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
 
   override fun getItemCount(): Int = mEvents?.size ?: 0
 
-  class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-  }
+  class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 }

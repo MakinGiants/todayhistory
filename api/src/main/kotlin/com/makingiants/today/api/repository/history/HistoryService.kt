@@ -7,5 +7,5 @@ import rx.Observable
 
 internal interface HistoryService {
   @GET("main.json")
-  operator fun get(@Query("d") day: String, @Query("m") month: String): Observable<List<Event>>
+  operator fun get(@Query("d") day: Int, @Query("m") month: Int): Observable<List<Event>>
 }

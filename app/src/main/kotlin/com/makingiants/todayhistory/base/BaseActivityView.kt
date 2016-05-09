@@ -11,57 +11,57 @@ import com.makingiants.todayhistory.R
 import timber.log.Timber
 
 open class BaseActivityView : AppCompatActivity() {
-    protected var mToolbar: Toolbar? = null
+  protected var mToolbar: Toolbar? = null
 
-    //<editor-fold desc="Toolbar">
-    protected fun activateToolbar(@StringRes title: Int): Toolbar? {
-        activateToolbar()
-        setTitle(title)
-        return mToolbar
+  //<editor-fold desc="Toolbar">
+  protected fun activateToolbar(@StringRes title: Int): Toolbar? {
+    activateToolbar()
+    setTitle(title)
+    return mToolbar
+  }
+
+  protected fun activateToolbar(): Toolbar? {
+    if (mToolbar == null) {
+      mToolbar = findViewById(R.id.toolbar) as Toolbar
+      if (mToolbar != null) {
+        setSupportActionBar(mToolbar)
+      }
+    }
+    return mToolbar
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Alert Dialogs">
+
+  fun showToast(content: String) {
+    Toast.makeText(this, content, Toast.LENGTH_LONG).show()
+  }
+
+  fun buildDialog(title: CharSequence, @Nullable message: CharSequence?): AlertDialog.Builder {
+    val builder = AlertDialog.Builder(this).setTitle(title)
+
+    if (message != null) {
+      builder.setMessage(message)
     }
 
-    protected fun activateToolbar(): Toolbar? {
-        if (mToolbar == null) {
-            mToolbar = findViewById(R.id.toolbar) as Toolbar
-            if (mToolbar != null) {
-                setSupportActionBar(mToolbar)
-            }
-        }
-        return mToolbar
+    return builder
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="Error Management">
+  open fun showError(throwable: Throwable) {
+    val message: String
+    val title: String
+    if (throwable is ApiException) {
+      message = throwable.message ?: getString(R.string.error_dialog_message)
+      title = throwable.name
+    } else {
+      title = getString(R.string.error_dialog_title)
+      message = getString(R.string.error_dialog_message)
+      Timber.i("Error is not an ApiException.")
     }
-    //</editor-fold>
 
-    //<editor-fold desc="Alert Dialogs">
-
-    fun showToast(content: String) {
-        Toast.makeText(this, content, Toast.LENGTH_LONG).show()
-    }
-
-    fun buildDialog(title: CharSequence, @Nullable message: CharSequence?): AlertDialog.Builder {
-        val builder = AlertDialog.Builder(this).setTitle(title)
-
-        if (message != null) {
-            builder.setMessage(message)
-        }
-
-        return builder
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Error Management">
-    open fun showError(throwable: Throwable) {
-        val message: String
-        val title: String
-        if (throwable is ApiException) {
-            message = throwable.message ?: getString(R.string.error_dialog_message)
-            title = throwable.name
-        } else {
-            title = getString(R.string.error_dialog_title)
-            message = getString(R.string.error_dialog_message)
-            Timber.i("Error is not an ApiException.")
-        }
-
-        buildDialog(title, message).setPositiveButton(R.string.dialog_button_ok, null).show()
-    }
-    //</editor-fold>
+    buildDialog(title, message).setPositiveButton(R.string.dialog_button_ok, null).show()
+  }
+  //</editor-fold>
 }
