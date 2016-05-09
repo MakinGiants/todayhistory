@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
-import com.makingiants.today.api.utils.cache.DiskCache
 import com.makingiants.todayhistory.R
 import com.makingiants.todayhistory.base.BaseActivityView
 import com.makingiants.todayhistory.utils.DateManager
@@ -30,8 +29,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     activateToolbar(R.string.app_name)
 
     Timber.tag("TodayActivity")
-    mPresenter.onCreate(this, HistoryRepository(DiskCache(applicationContext)),
-        NetworkChecker(applicationContext))
+    mPresenter.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
   }
 
   override fun onDestroy() {
