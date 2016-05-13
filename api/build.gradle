@@ -1,7 +1,7 @@
 buildscript {
   repositories {
     mavenCentral()
-    jcenter() // gradle-versions-plugin
+    jcenter() // gradle-versions-plugin, realm
     maven { url 'https://maven.fabric.io/public' }
   }
 
@@ -47,8 +47,12 @@ android {
   }
 }
 
-ext.libDeps = [retrofit: "2.0.0",
+ext.libDeps = [retrofit: "2.0.2",
                okhttp3 : "3.2.0"]
+
+repositories {
+  jcenter()
+}
 
 dependencies {
   compile "com.android.support:appcompat-v7:$deps.supportLib"
@@ -61,5 +65,6 @@ dependencies {
   compile "com.squareup.okhttp3:okhttp:$libDeps.okhttp3"
   compile "com.squareup.okhttp3:logging-interceptor:$libDeps.okhttp3"
 
-  compile 'io.reactivex:rxandroid:1.1.0'
+  compile 'io.reactivex:rxandroid:1.2.0'
+  compile 'io.reactivex:rxjava:1.1.5'
 }

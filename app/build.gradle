@@ -7,7 +7,7 @@ buildscript {
 
   dependencies {
     classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-    classpath 'io.fabric.tools:gradle:1.21.4'
+    classpath 'io.fabric.tools:gradle:1.21.6'
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$deps.kotlin"
     classpath "org.jetbrains.kotlin:kotlin-android-extensions:$deps.kotlin"
   }
@@ -54,8 +54,8 @@ android {
   }
   buildTypes {
     debug {
-      minifyEnabled true
-      shrinkResources true
+      minifyEnabled false
+      shrinkResources false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
     release {
@@ -103,7 +103,7 @@ dependencies {
   compile 'com.github.florent37:picassopalette:1.0.2@aar'
 
   // Management
-  compile 'com.jakewharton.timber:timber:4.1.0@aar'
+  compile 'com.jakewharton.timber:timber:4.1.2@aar'
   compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 
   testCompile "org.jetbrains.kotlin:kotlin-test:$deps.kotlin"

@@ -18,84 +18,84 @@ import kotlinx.android.synthetic.main.today_activity.*
 import timber.log.Timber
 
 class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
-    val mPresenter: TodayPresenter by lazy { TodayPresenter(DateManager()) }
-    val mAdapter: TodayAdapter by lazy { TodayAdapter(Picasso.with(applicationContext)) }
+  val mPresenter: TodayPresenter by lazy { TodayPresenter(DateManager()) }
+  val mAdapter: TodayAdapter by lazy { TodayAdapter(Picasso.with(applicationContext)) }
 
-    //<editor-fold desc="Activity">
+  //<editor-fold desc="Activity">
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.today_activity)
-        activateToolbar(R.string.app_name)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.today_activity)
+    activateToolbar(R.string.app_name)
 
-        Timber.tag("TodayActivity")
-        mPresenter.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
+    Timber.tag("TodayActivity")
+    mPresenter.onCreate(this, HistoryRepository(), NetworkChecker(applicationContext))
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    mPresenter.onDestroy()
+
+    swipeRefreshLayout.setScrollEnabler(null)
+    swipeRefreshLayout.setOnRefreshListener(null)
+  }
+  //</editor-fold>
+
+  //<editor-fold desc="TodayView">
+  override fun initViews() {
+    recyclerView.apply {
+      adapter = mAdapter
+      layoutManager = LinearLayoutManager(applicationContext)
+      itemAnimator = DefaultItemAnimator()
+      addItemDecoration(SpacesItemDecoration(16))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mPresenter.onDestroy()
-
-        swipeRefreshLayout.setScrollEnabler(null)
-        swipeRefreshLayout.setOnRefreshListener(null)
+    swipeRefreshLayout.apply {
+      setOnRefreshListener(this@TodayActivity)
+      setScrollEnabler(this@TodayActivity)
+      setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
     }
-    //</editor-fold>
+  }
 
-    //<editor-fold desc="TodayView">
-    override fun initViews() {
-        recyclerView.apply {
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(applicationContext)
-            itemAnimator = DefaultItemAnimator()
-            addItemDecoration(SpacesItemDecoration(16))
-        }
+  override fun showEvents(events: List<Event>) {
+    recyclerView.visibility = View.VISIBLE
+    mAdapter.setEvents(events)
+  }
 
-        swipeRefreshLayout.apply {
-            setOnRefreshListener(this@TodayActivity)
-            setScrollEnabler(this@TodayActivity)
-            setColorSchemeColors(R.color.colorAccent, R.color.colorPrimary)
-        }
-    }
+  override fun hideEvents() = recyclerView.setVisibility(View.GONE)
 
-    override fun showEvents(events: List<Event>) {
-        recyclerView.visibility = View.VISIBLE
-        mAdapter.setEvents(events)
-    }
+  override fun showEmptyViewProgress() = progressView.setVisibility(View.VISIBLE)
 
-    override fun hideEvents() = recyclerView.setVisibility(View.GONE)
+  override fun dismissEmptyViewProgress() = progressView.setVisibility(View.GONE)
 
-    override fun showEmptyViewProgress() = progressView.setVisibility(View.VISIBLE)
+  override fun showReloadProgress() = swipeRefreshLayout.setRefreshing(true)
 
-    override fun dismissEmptyViewProgress() = progressView.setVisibility(View.GONE)
+  override fun dismissReloadProgress() = swipeRefreshLayout.setRefreshing(false)
 
-    override fun showReloadProgress() = swipeRefreshLayout.setRefreshing(true)
+  override fun showErrorView(title: String, message: String) {
+    errorTitleView.text = title
+    errorMessageTextView.text = message
+    errorView.visibility = View.VISIBLE
+  }
 
-    override fun dismissReloadProgress() = swipeRefreshLayout.setRefreshing(false)
+  override fun hideErrorView() = errorView.setVisibility(View.GONE)
 
-    override fun showErrorView(title: String, message: String) {
-        errorTitleView.text = title
-        errorMessageTextView.text = message
-        errorView.visibility = View.VISIBLE
-    }
+  override fun showErrorToast(message: String) = showToast(message)
 
-    override fun hideErrorView() = errorView.setVisibility(View.GONE)
+  override fun showEmptyView() = emptyView.setVisibility (View.VISIBLE)
 
-    override fun showErrorToast(message: String) = showToast(message)
+  override fun hideEmptyView() = emptyView.setVisibility(View.GONE)
 
-    override fun showEmptyView() = emptyView.setVisibility (View.VISIBLE)
+  override fun showErrorDialog(throwable: Throwable) = super.showError(throwable)
 
-    override fun hideEmptyView() = emptyView.setVisibility(View.GONE)
+  //</editor-fold>
 
-    override fun showErrorDialog(throwable: Throwable) = super.showError(throwable)
+  //<editor-fold desc="SwipeRefreshLayout.OnRefreshListener">
+  override fun onRefresh() = mPresenter.onRefresh()
+  //</editor-fold>
 
-    //</editor-fold>
-
-    //<editor-fold desc="SwipeRefreshLayout.OnRefreshListener">
-    override fun onRefresh() = mPresenter.onRefresh()
-    //</editor-fold>
-
-    //<editor-fold desc="ScrollEnabler">
-    override fun canScrollUp(): Boolean =
-            recyclerView.visibility === View.VISIBLE && recyclerView.canScrollVertically(-1)
-    //</editor-fold>
+  //<editor-fold desc="ScrollEnabler">
+  override fun canScrollUp(): Boolean =
+      recyclerView.visibility === View.VISIBLE && recyclerView.canScrollVertically(-1)
+  //</editor-fold>
 }
