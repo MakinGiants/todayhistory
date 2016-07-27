@@ -4,6 +4,7 @@ import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.api.MockHistory.events
 import com.makingiants.todayhistory.api.error_handling.MockApiException.apiException
+import com.makingiants.todayhistory.mockSchedulers
 import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
 import org.assertj.core.api.Assertions.assertThat
@@ -24,8 +25,8 @@ class TodayPresenterTests {
 
   @Before
   fun setup() {
+    mockSchedulers()
     MockitoAnnotations.initMocks(this)
-    //        Mockito.reset(mockedEventRepository!!, mockedView!!, mockedDateManager!!, mockedNetworkChecker!!)
     presenter = TodayPresenter(mockedDateManager)
     `when`(mockedNetworkChecker.isNetworkConnectionAvailable()).thenReturn(true)
   }
