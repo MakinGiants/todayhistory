@@ -1,4 +1,4 @@
-package com.makingiants.todayhistory.today
+package com.makingiants.todayhistory.screens.today
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import com.makingiants.todayhistory.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.today_item.view.*
 
-class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAdapter.SongViewHolder>() {
-  private var mEvents: Array<Event>? = null
+class TodayAdapter(private val picasso: Picasso) : RecyclerView.Adapter<TodayAdapter.SongViewHolder>() {
+  private var events: Array<Event>? = null
 
   override fun onCreateViewHolder(container: ViewGroup, viewType: Int): SongViewHolder {
     val inflater = LayoutInflater.from(container.context)
@@ -21,13 +21,13 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
   }
 
   override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-    val event = mEvents!![position]
+    val event = events!![position]
 
     holder.itemView.titleTextView.text = event.title
     holder.itemView.dateTextView.text = event.date
 
     event.thumb?.src?.let {
-      mPicasso.load(it)
+      picasso.load(it)
           .placeholder(R.color.material_grey_600)
           .fit()
           .centerInside()
@@ -39,11 +39,11 @@ class TodayAdapter(private val mPicasso: Picasso) : RecyclerView.Adapter<TodayAd
   }
 
   fun setEvents(events: List<Event>) {
-    mEvents = events.toTypedArray()
+    this.events = events.toTypedArray()
     notifyDataSetChanged()
   }
 
-  override fun getItemCount(): Int = mEvents?.size ?: 0
+  override fun getItemCount(): Int = events?.size ?: 0
 
   class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {}
 }
