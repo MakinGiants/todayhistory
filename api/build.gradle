@@ -1,13 +1,13 @@
 buildscript {
   repositories {
     mavenCentral()
-    jcenter() // gradle-versions-plugin
+    jcenter() // gradle-versions-plugin, realm
     maven { url 'https://maven.fabric.io/public' }
   }
 
   dependencies {
-    classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$deps.kotlin"
+    classpath plugs.gradleVersions
+    classpath plugs.kotlin
   }
 }
 
@@ -47,19 +47,26 @@ android {
   }
 }
 
-ext.libDeps = [retrofit: "2.0.0",
-               okhttp3 : "3.2.0"]
+ext.libDeps = [retrofit: "2.1.0",
+               okhttp3 : "3.4.1"]
+
+repositories {
+  jcenter()
+}
 
 dependencies {
-  compile "com.android.support:appcompat-v7:$deps.supportLib"
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$deps.kotlin"
+  compile deps.supportAppCompat
+  compile deps.kotlinStdLib
 
+  // Base
   compile "com.squareup.retrofit2:retrofit:$libDeps.retrofit"
   compile "com.squareup.retrofit2:adapter-rxjava:$libDeps.retrofit"
   compile "com.squareup.retrofit2:converter-gson:$libDeps.retrofit"
-
   compile "com.squareup.okhttp3:okhttp:$libDeps.okhttp3"
   compile "com.squareup.okhttp3:logging-interceptor:$libDeps.okhttp3"
 
-  compile 'io.reactivex:rxandroid:1.1.0'
+  // Features
+  compile 'io.reactivex:rxandroid:1.2.1'
+  compile 'io.reactivex:rxjava:1.1.8'
+  compile 'com.artemzin.rxjava:proguard-rules:1.1.8.0@aar'
 }

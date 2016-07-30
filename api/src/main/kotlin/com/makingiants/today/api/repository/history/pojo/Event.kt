@@ -2,4 +2,10 @@ package com.makingiants.today.api.repository.history.pojo
 
 import com.google.gson.annotations.SerializedName
 
-class Event(val title: String, val date: String, @SerializedName("url") val imageUrl: String)
+class Event(var title: String,
+            var date: String,
+            var thumb: Thumb)
+
+class Thumb(@SerializedName("w") var weight: Int,
+            @SerializedName("h") var height: Int,
+            val src: String)

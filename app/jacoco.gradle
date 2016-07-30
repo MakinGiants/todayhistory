@@ -15,7 +15,9 @@ project.afterEvaluate {
   def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
 
   // When no product flavors defined, use empty
-  if (!productFlavors) productFlavors.add('')
+  if (!productFlavors) {
+    productFlavors.add('')
+  }
 
   productFlavors.each { productFlavorName ->
     buildTypes.each { buildTypeName ->
@@ -34,8 +36,7 @@ project.afterEvaluate {
         group = 'Reporting'
         description = "Generate Jacoco coverage reports for the ${sourceName.capitalize()} build."
 
-        classDirectories = fileTree(
-            dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+        classDirectories = fileTree(dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
             excludes: ['**/R.class',
                        '**/R$*.class',
                        '**/*$ViewInjector*.*',
@@ -49,11 +50,9 @@ project.afterEvaluate {
                        '**/*_Provide*Factory*.*'] // Dagger auto-generated code.
         )
 
-        def coverageSourceDirs = [
-            'src/main/java',
-            "src/$productFlavorName/java",
-            "src/$buildTypeName/java"
-        ]
+        def coverageSourceDirs = ['src/main/java',
+                                  "src/$productFlavorName/java",
+                                  "src/$buildTypeName/java"]
         additionalSourceDirs = files(coverageSourceDirs)
         sourceDirectories = files(coverageSourceDirs)
         executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")

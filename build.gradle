@@ -1,16 +1,28 @@
 buildscript {
-  ext.deps = [kotlin    : "1.0.1",
-              supportLib: "23.2.0"]
+  ext.versions = [kotlin    : "1.0.3",
+                  supportLib: "24.1.1"]
 
-  ext.setup = [targetSdk : 23,
+  ext.setup = [targetSdk : 24,
                minSdk    : 15,
-               buildTools: "23.0.2"]
+               buildTools: "24.0.1"]
+
+  ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.13.0',
+               kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.versions.kotlin",
+               kotlinExtensions: "org.jetbrains.kotlin:kotlin-android-extensions:$ext.versions.kotlin"]
+
+  ext.deps = [supportAppCompat: "com.android.support:appcompat-v7:${ext.versions.supportLib}",
+              supportDesign   : "com.android.support:design:${ext.versions.supportLib}",
+              supportCardView : "com.android.support:cardview-v7:${ext.versions.supportLib}",
+              supportPalette  : "com.android.support:palette-v7:${ext.versions.supportLib}",
+              kotlinStdLib    : "org.jetbrains.kotlin:kotlin-stdlib:${ext.versions.kotlin}",
+              kotlinTest      : "org.jetbrains.kotlin:kotlin-test:${ext.versions.kotlin}"]
 
   repositories {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.0-alpha4'
+    classpath 'com.android.tools.build:gradle:2.1.2'
+    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // Dagger
   }
 }
 

@@ -4,8 +4,8 @@ import timber.log.Timber
 
 class DebugTree : Timber.DebugTree() {
 
-    override fun createStackElementTag(element: StackTraceElement): String {
-        // Print line number too
-        return super.createStackElementTag(element) + ":" + element.lineNumber
-    }
+  override fun createStackElementTag(element: StackTraceElement): String {
+    // Print line number too
+    return super.createStackElementTag(element) + ":" + element.lineNumber
+  }
 }
