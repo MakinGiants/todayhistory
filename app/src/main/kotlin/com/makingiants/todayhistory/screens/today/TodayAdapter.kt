@@ -11,7 +11,7 @@ import com.makingiants.todayhistory.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.today_item.view.*
 
-class TodayAdapter(private val picasso: Picasso) : RecyclerView.Adapter<TodayAdapter.SongViewHolder>() {
+class TodayAdapter(val picasso: Picasso) : RecyclerView.Adapter<TodayAdapter.SongViewHolder>() {
   private var events: Array<Event>? = null
 
   override fun onCreateViewHolder(container: ViewGroup, viewType: Int): SongViewHolder {
