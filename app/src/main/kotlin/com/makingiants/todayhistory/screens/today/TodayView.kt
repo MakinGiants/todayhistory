@@ -1,4 +1,4 @@
-package com.makingiants.todayhistory.today
+package com.makingiants.todayhistory.screens.today
 
 import com.makingiants.today.api.repository.history.pojo.Event
 

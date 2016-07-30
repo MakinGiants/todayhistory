@@ -10,6 +10,12 @@ import java.util.*
 
 class TodayApp : Application() {
 
+  val applicationComponent: ApplicationComponent by lazy {
+    DaggerApplicationComponent.builder()
+        .applicationModule(ApplicationModule(this))
+        .build()
+  }
+
   override fun onCreate() {
     super.onCreate()
 
@@ -18,6 +24,7 @@ class TodayApp : Application() {
     } else {
       Timber.plant(DebugTree())
     }
+    Timber.tag("TodayHistory")
 
     Api.init(applicationContext, BuildConfig.HOST, Api.LOG_LEVEL_FULL)
   }
