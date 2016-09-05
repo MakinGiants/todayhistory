@@ -11,30 +11,36 @@ import com.makingiants.todayhistory.utils.NetworkChecker
 import com.makingiants.todayhistory.utils.extensions.composeForIoTasks
 import rx.subscriptions.CompositeSubscription
 
-open class TodayPresenter(var dateManager: DateManager,
-                          val historyRepository: HistoryRepository,
-                          val networkChecker: NetworkChecker) {
-  @VisibleForTesting var compositeSubscription: CompositeSubscription? = null
-  @VisibleForTesting var view: TodayView? = null
-  private var currentEvents: List<Event>? = null
+open class TodayPresenter(var dateManager: DateManager) {
+  @VisibleForTesting var mCompositeSubscription: CompositeSubscription? = null
+  @VisibleForTesting var mView: TodayView? = null
+  private var mHistoryRepository: HistoryRepository? = null
+  private var mNetworkChecker: NetworkChecker? = null
+  private var mEvents: List<Event>? = null
 
-  fun attach(view: TodayView) {
-    this.view = view
-    compositeSubscription = CompositeSubscription()
+  fun onCreate(view: TodayView, historyRepository: HistoryRepository,
+               networkChecker: NetworkChecker) {
+    mView = view
+    mHistoryRepository = historyRepository
+    mNetworkChecker = networkChecker
+    mCompositeSubscription = CompositeSubscription()
 
     view.initViews()
-    if (currentEvents == null) {
+
+    if (mEvents == null) {
       loadEvents(true)
     } else {
-      view.showEvents(currentEvents!!)
+      mView?.showEvents(mEvents!!)
     }
   }
 
-  fun unAttach() {
-    view = null
+  fun onDestroy() {
+    mView = null
+    mHistoryRepository = null
+    mNetworkChecker = null
 
-    if (compositeSubscription?.hasSubscriptions() ?: false) {
-      compositeSubscription?.unsubscribe()
+    if (mCompositeSubscription?.hasSubscriptions() ?: false) {
+      mCompositeSubscription?.unsubscribe()
     }
   }
 
@@ -42,22 +48,22 @@ open class TodayPresenter(var dateManager: DateManager,
 
   @VisibleForTesting
   fun loadEvents(isFistTime: Boolean = false) {
-    if (!networkChecker.isNetworkConnectionAvailable()) {
-      view?.showErrorToast(NoInternetApiError())
+    if (!(mNetworkChecker?.isNetworkConnectionAvailable() ?: true)) {
+      mView?.showErrorToast(NoInternetApiError())
       return
     }
 
     if (isFistTime) {
-      view?.showEmptyViewProgress()
+      mView?.showEmptyViewProgress()
     } else {
-      view?.showReloadProgress()
+      mView?.showReloadProgress()
     }
 
-    val subscription = historyRepository.get(dateManager.getTodayDay(), dateManager.getTodayMonth())
-        .composeForIoTasks()
-        .subscribe({ answer: Answer<List<Event>> ->
+    val subscription = mHistoryRepository?.get(dateManager.getTodayDay(), dateManager.getTodayMonth())
+        ?.composeForIoTasks()
+        ?.subscribe({ answer: Answer<List<Event>> ->
 
-          view?.apply {
+          mView?.apply {
             hideErrorView()
             hideEmptyView()
             dismissEmptyViewProgress()
@@ -67,41 +73,42 @@ open class TodayPresenter(var dateManager: DateManager,
           val events = answer.body
           if (answer.error == null && events != null) {
             if (events.isEmpty()) {
-              if (currentEvents == null) {
-                view?.showEmptyView()
+              if (mEvents == null) {
+                mView?.showEmptyView()
               } else {
-                view?.showErrorEmptyItemsToast()
+                mView?.showErrorEmptyItemsToast()
               }
             } else {
-              currentEvents = events
-              view?.showEvents(events)
+              mEvents = events
+              mView?.showEvents(events)
             }
           } else {
             manageError(answer.error)
           }
         }, { error: Throwable ->
-          view?.apply {
+          mView?.apply {
             hideEmptyView()
             dismissEmptyViewProgress()
             dismissReloadProgress()
           }
 
-          if (currentEvents == null) {
-            if (isFistTime || currentEvents == null || currentEvents!!.isEmpty()) {
-              view?.showErrorView(ApiError(error))
-              view?.hideEvents()
+          if (mEvents == null) {
+            if (isFistTime || mEvents == null || mEvents!!.isEmpty()) {
+              mView?.showErrorView(ApiError(error))
+              mView?.hideEvents()
             } else {
-              view?.showErrorDialog(ApiError(error))
+              mView?.showErrorDialog(ApiError(error))
             }
           } else {
-            view?.showErrorToast(ApiError(error))
+            mView?.showErrorToast(ApiError(error))
           }
         })
 
-    compositeSubscription?.add(subscription)
+    mCompositeSubscription?.add(subscription)
   }
 
   fun manageError(apiError: ApiError?) = apiError?.let {
-    view?.showErrorDialog(apiError)
+    mView?.showErrorDialog(apiError)
   }
+
 }
