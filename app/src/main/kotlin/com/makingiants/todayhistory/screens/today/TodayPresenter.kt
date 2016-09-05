@@ -8,7 +8,7 @@ import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
-import com.makingiants.todayhistory.utils.Transformer
+import com.makingiants.todayhistory.utils.extensions.composeForIoTasks
 import rx.subscriptions.CompositeSubscription
 
 open class TodayPresenter(var dateManager: DateManager,
@@ -42,7 +42,7 @@ open class TodayPresenter(var dateManager: DateManager,
 
   @VisibleForTesting
   fun loadEvents(isFistTime: Boolean = false) {
-    if (!(networkChecker?.isNetworkConnectionAvailable() ?: true)) {
+    if (!networkChecker.isNetworkConnectionAvailable()) {
       view?.showErrorToast(NoInternetApiError())
       return
     }
@@ -53,9 +53,9 @@ open class TodayPresenter(var dateManager: DateManager,
       view?.showReloadProgress()
     }
 
-    val subscription = historyRepository?.get(dateManager.getTodayDay(), dateManager.getTodayMonth())
-        ?.compose(Transformer.applyIoSchedulers<Answer<List<Event>>>())
-        ?.subscribe({ answer: Answer<List<Event>> ->
+    val subscription = historyRepository.get(dateManager.getTodayDay(), dateManager.getTodayMonth())
+        .composeForIoTasks()
+        .subscribe({ answer: Answer<List<Event>> ->
 
           view?.apply {
             hideErrorView()

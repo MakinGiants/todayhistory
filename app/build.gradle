@@ -77,8 +77,6 @@ android {
   // Kotlin
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
-    prod.java.srcDirs += 'src/prod/kotlin'
-    mocked.java.srcDirs += 'src/mocked/kotlin'
   }
 }
 
