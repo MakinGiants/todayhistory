@@ -1,5 +1,6 @@
 package com.makingiants.todayhistory.screens.today
 
+import com.makingiants.today.api.error_handling.ApiError
 import com.makingiants.today.api.repository.history.pojo.Event
 
 interface TodayView {
@@ -21,11 +22,13 @@ interface TodayView {
 
   fun showReloadProgress()
 
-  fun showErrorView(title: String, message: String)
+  fun showErrorView(apiError: ApiError)
 
   fun hideErrorView()
 
-  fun showErrorToast(message: String)
+  fun showErrorToast(apiError: ApiError)
 
-  fun showErrorDialog(throwable: Throwable)
+  fun showErrorDialog(apiError: ApiError)
+
+  fun showErrorEmptyItemsToast()
 }

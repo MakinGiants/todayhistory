@@ -6,6 +6,8 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.makingiants.today.api.error_handling.ApiError
+import com.makingiants.today.api.repository.history.HistoryRepository
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.R
 import com.makingiants.todayhistory.TodayApp
@@ -72,21 +74,25 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
 
   override fun dismissReloadProgress() = swipeRefreshLayout.setRefreshing(false)
 
-  override fun showErrorView(title: String, message: String) {
-    errorTitleView.text = title
-    errorMessageTextView.text = message
+  override fun showErrorView(apiError: ApiError) {
+    errorTitleView.text = apiError.getTitle(this)
+    errorMessageTextView.text = apiError.getMessage(this)
     errorView.visibility = View.VISIBLE
   }
 
   override fun hideErrorView() = errorView.setVisibility(View.GONE)
 
-  override fun showErrorToast(message: String) = showToast(message)
+  override fun showErrorToast(apiError: ApiError) = showToast(apiError.getMessage(this))
 
   override fun showEmptyView() = emptyView.setVisibility(View.VISIBLE)
 
   override fun hideEmptyView() = emptyView.setVisibility(View.GONE)
 
-  override fun showErrorDialog(throwable: Throwable) = super.showError(throwable)
+  override fun showErrorDialog(apiError: ApiError) {
+    super.showError(apiError)
+  }
+
+  override fun showErrorEmptyItemsToast() = showToast(getString(R.string.today_empty_list))
 
   //</editor-fold>
 

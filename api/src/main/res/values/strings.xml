@@ -1,3 +1,8 @@
 <resources>
   <string name="app_name">Api</string>
+
+  <string name="error">Error</string>
+  <string name="error_message">Something happened, excuse us and give us some time to fix it, we will ,).</string>
+  <string name="error_uninitialized">You need to call Api.init(…) before using the api.</string>
+  <string name="error_no_internet">Looks like you don\`t have internet connection.</string>
 </resources>

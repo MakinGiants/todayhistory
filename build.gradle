@@ -21,8 +21,8 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.2'
     classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // Dagger
+    classpath 'com.android.tools.build:gradle:2.1.3'
   }
 }
 
