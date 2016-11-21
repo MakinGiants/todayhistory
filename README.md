@@ -1,6 +1,8 @@
 Today History Android app
 =========================
 
+[![Throughput Graph](https://graphs.waffle.io/MakinGiants/todayhistory/throughput.svg)](https://waffle.io/MakinGiants/todayhistory/metrics/throughput)
+
 + Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
 + Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
 + Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
