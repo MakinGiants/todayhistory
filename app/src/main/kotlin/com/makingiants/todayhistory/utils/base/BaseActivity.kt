@@ -5,10 +5,18 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.makingiants.today.api.error_handling.ApiException
-import com.makingiants.todayhistory.R
+import com.makingiants.todayhistory.*
 import timber.log.Timber
 
-open class BaseActivityView : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
+
+  val activityComponent: MyActivityComponent by lazy {
+    DaggerMyActivityComponent.builder()
+        .myApplicationComponent((application as TodayApp).applicationComponent)
+        .myActivityModule(MyActivityModule(this))
+        .build()
+  }
+
   //<editor-fold desc="Alert Dialogs">
 
   fun showToast(content: String) {

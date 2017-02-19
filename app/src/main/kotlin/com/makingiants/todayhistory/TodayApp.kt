@@ -10,9 +10,9 @@ import java.util.*
 
 class TodayApp : Application() {
 
-  val applicationComponent: ApplicationComponent by lazy {
-    DaggerApplicationComponent.builder()
-        .applicationModule(ApplicationModule(this))
+  val applicationComponent: MyApplicationComponent by lazy {
+    DaggerMyApplicationComponent.builder()
+        .myApplicationModule(MyApplicationModule(this))
         .build()
   }
 
