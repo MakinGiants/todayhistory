@@ -1,10 +1,10 @@
 buildscript {
-  ext.versions = [kotlin    : "1.0.3",
-                  supportLib: "24.1.1"]
+  ext.versions = [kotlin    : "1.0.6",
+                  supportLib: "25.1.1"]
 
   ext.setup = [targetSdk : 24,
                minSdk    : 15,
-               buildTools: "24.0.1"]
+               buildTools: "25.0.2"]
 
   ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.13.0',
                kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.versions.kotlin",
@@ -19,10 +19,11 @@ buildscript {
 
   repositories {
     jcenter()
+    maven { url "https://plugins.gradle.org/m2/" } // Gradle scan
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.2'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // Dagger
+    classpath 'com.android.tools.build:gradle:2.2.3'
+    classpath "com.gradle:build-scan-plugin:1.1.1"  // Gradle scan
   }
 }
 
@@ -35,3 +36,11 @@ allprojects {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
+
+// Gradle scan
+apply plugin: "com.gradle.build-scan"
+buildScan {
+  licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+  licenseAgree = 'yes'
+}
+

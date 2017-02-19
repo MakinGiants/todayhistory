@@ -1,3 +1,7 @@
+-optimizations code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+-optimizationpasses 5
+-allowaccessmodification
+
 # Keep Parcelable classes
 -keepclassmembers class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
@@ -25,13 +29,3 @@
 
 # Anko
 -dontwarn org.jetbrains.anko.**
-
-# RX
--keep class rx.schedulers.Schedulers { *; }
--keep class rx.schedulers.ImmediateScheduler { public <methods>; }
--keep class rx.schedulers.TestScheduler { public <methods>; }
--keep class rx.schedulers.Schedulers { public static ** test(); }
--keep class rx.** { *; }
--keepclassmembers class rx.** { *; }
--dontwarn org.hamcrest.**
--dontwarn sun.misc.**
