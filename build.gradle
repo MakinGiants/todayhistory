@@ -14,7 +14,7 @@ buildscript {
               supportDesign   : "com.android.support:design:${ext.versions.supportLib}",
               supportCardView : "com.android.support:cardview-v7:${ext.versions.supportLib}",
               supportPalette  : "com.android.support:palette-v7:${ext.versions.supportLib}",
-              kotlinStdLib    : "org.jetbrains.kotlin:kotlin-stdlib:${ext.versions.kotlin}",
+              kotlinStdLib    : "or" + "g.jetbrains.kotlin:kotlin-stdlib:${ext.versions.kotlin}",
               kotlinTest      : "org.jetbrains.kotlin:kotlin-test:${ext.versions.kotlin}"]
 
   repositories {
