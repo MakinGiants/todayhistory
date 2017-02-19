@@ -1,4 +1,4 @@
-package com.makingiants.todayhistory
+package com.makingiants.todayhistory.base.dependency_injection
 
 
 import android.support.v4.app.FragmentActivity

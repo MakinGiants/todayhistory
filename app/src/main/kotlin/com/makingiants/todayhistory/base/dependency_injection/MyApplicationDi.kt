@@ -1,4 +1,4 @@
-package com.makingiants.todayhistory
+package com.makingiants.todayhistory.base.dependency_injection
 
 import android.app.Application
 import android.content.Context

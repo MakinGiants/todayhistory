@@ -3,6 +3,9 @@ package com.makingiants.todayhistory
 import android.app.Application
 import android.os.Build
 import com.makingiants.today.api.Api
+import com.makingiants.todayhistory.base.dependency_injection.DaggerMyApplicationComponent
+import com.makingiants.todayhistory.base.dependency_injection.MyApplicationComponent
+import com.makingiants.todayhistory.base.dependency_injection.MyApplicationModule
 import com.makingiants.todayhistory.utils.log.CrashlyticsTree
 import com.makingiants.todayhistory.utils.log.DebugTree
 import timber.log.Timber

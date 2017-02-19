@@ -8,8 +8,8 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.R
+import com.makingiants.todayhistory.base.BaseActivity
 import com.makingiants.todayhistory.utils.SpacesItemDecoration
-import com.makingiants.todayhistory.utils.base.BaseActivity
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.today_activity.*
