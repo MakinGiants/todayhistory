@@ -45,5 +45,6 @@ class TodayAdapter(val picasso: Picasso) : RecyclerView.Adapter<TodayAdapter.Son
 
   override fun getItemCount(): Int = events?.size ?: 0
 
-  class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {}
+  class SongViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView)
+
 }

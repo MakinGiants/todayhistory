@@ -1,18 +1,3 @@
-buildscript {
-  repositories {
-    mavenCentral()
-    jcenter() // gradle-versions-plugin
-    maven { url 'https://maven.fabric.io/public' }
-  }
-
-  dependencies {
-    classpath plugs.gradleVersions
-    classpath plugs.kotlin
-    classpath plugs.kotlinExtensions
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -97,22 +82,22 @@ dependencies {
   compile deps.kotlinStdLib
   compile project(':api')
 
-  compile 'com.google.dagger:dagger:2.9'
-  kapt 'com.google.dagger:dagger-compiler:2.9'
-  provided 'org.glassfish:javax.annotation:10.0-b28'
+  compile deps.dagger
+  kapt deps.daggerCompiler
+  provided deps.javax
 
   // Features
-  compile 'com.squareup.picasso:picasso:2.5.2'
-  compile 'com.github.florent37:picassopalette:1.0.2@aar'
+  compile deps.picasso
+  compile deps.picassoPalette
 
   // Management
-  compile 'com.jakewharton.timber:timber:4.3.1@aar'
-  compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') { transitive = true; }
+  compile deps.timber
+  compile(deps.crashlytics) { transitive = true; }
 
   testCompile deps.kotlinTest
-  testCompile 'junit:junit:4.12'
-  testCompile "org.mockito:mockito-core:1.10.19"
-  testCompile('com.squareup.assertj:assertj-android:1.1.1') {
+  testCompile deps.junit
+  testCompile deps.mockitoCore
+  testCompile(deps.assertJAndroid) {
     exclude group: 'com.android.support', module: 'support-annotations'
   }
 }
