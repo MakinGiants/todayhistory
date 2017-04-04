@@ -8,15 +8,14 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.R
-import com.makingiants.todayhistory.TodayApp
+import com.makingiants.todayhistory.base.BaseActivity
 import com.makingiants.todayhistory.utils.SpacesItemDecoration
-import com.makingiants.todayhistory.utils.base.BaseActivityView
 import com.makingiants.todayhistory.utils.refresh_layout.ScrollEnabler
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.today_activity.*
 import javax.inject.Inject
 
-class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
+class TodayActivity : BaseActivity(), TodayView, SwipeRefreshLayout.OnRefreshListener, ScrollEnabler {
   @Inject lateinit var presenter: TodayPresenter
   val todayAdapter: TodayAdapter by lazy { TodayAdapter(Picasso.with(applicationContext)) }
 
@@ -27,7 +26,7 @@ class TodayActivity : BaseActivityView(), TodayView, SwipeRefreshLayout.OnRefres
     setContentView(R.layout.today_activity)
     setSupportActionBar(toolbar as Toolbar)
 
-    (application as TodayApp).applicationComponent.inject(this)
+    activityComponent.inject(this)
 
     presenter.attach(this)
   }

@@ -1,14 +1,26 @@
-package com.makingiants.todayhistory.utils.base
+package com.makingiants.todayhistory.base
 
+import android.app.AlertDialog
 import android.support.annotation.Nullable
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.makingiants.today.api.error_handling.ApiException
 import com.makingiants.todayhistory.R
+import com.makingiants.todayhistory.TodayApp
+import com.makingiants.todayhistory.base.dependency_injection.DaggerMyActivityComponent
+import com.makingiants.todayhistory.base.dependency_injection.MyActivityComponent
+import com.makingiants.todayhistory.base.dependency_injection.MyActivityModule
 import timber.log.Timber
 
-open class BaseActivityView : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity() {
+
+  val activityComponent: MyActivityComponent by lazy {
+    DaggerMyActivityComponent.builder()
+        .myApplicationComponent((application as TodayApp).applicationComponent)
+        .myActivityModule(MyActivityModule(this))
+        .build()
+  }
+
   //<editor-fold desc="Alert Dialogs">
 
   fun showToast(content: String) {

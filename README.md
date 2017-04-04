@@ -1,14 +1,18 @@
 Today History Android app
 =========================
 
-+ Master: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
-+ Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
-+ Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
+[![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=master)](https://travis-ci.org/MakinGiants/todayhistory)
+
+[![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
 
 App that shows what happened today in history.
 
 ![sample](img/1.png)
 ![sample](img/2.png)
+
+# Working in
+
+[![Throughput Graph](https://graphs.waffle.io/MakinGiants/todayhistory/throughput.svg)](https://waffle.io/MakinGiants/todayhistory/metrics/throughput)
 
 ## Details
 - Written in Kotlin.
