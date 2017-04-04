@@ -11,6 +11,8 @@ import com.makingiants.todayhistory.utils.log.DebugTree
 import timber.log.Timber
 import java.util.*
 
+
+
 class TodayApp : Application() {
 
   val applicationComponent: MyApplicationComponent by lazy {
@@ -28,6 +30,20 @@ class TodayApp : Application() {
       Timber.plant(DebugTree())
     }
     Timber.tag("TodayHistory")
+
+//    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+//        .detectDiskReads()
+//        .detectDiskWrites()
+//        .detectNetwork()   // or .detectAll() for all detectable problems
+//        .penaltyLog()
+//        .build())
+//
+//    StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+//        .detectLeakedSqlLiteObjects()
+//        .detectLeakedClosableObjects()
+//        .penaltyLog()
+//        .penaltyDeath()
+//        .build())
 
     Api.init(applicationContext, BuildConfig.HOST, Api.LOG_LEVEL_FULL)
   }

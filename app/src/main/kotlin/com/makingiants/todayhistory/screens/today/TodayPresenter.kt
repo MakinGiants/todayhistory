@@ -32,7 +32,7 @@ open class TodayPresenter(var dateManager: DateManager,
     view = null
 
     if (compositeSubscription?.hasSubscriptions() ?: false) {
-      compositeSubscription?.unsubscribe()
+      compositeSubscription?.clear()
     }
   }
 

@@ -1,0 +1,49 @@
+ext.setup = [targetSdk : 25,
+             minSdk    : 15,
+             buildTools: "25.0.2"]
+
+ext.versions = [kotlin    : "1.1.1",
+                supportLib: "25.1.1",
+                retrofit  : "2.2.0",
+                okhttp3   : "3.6.0",
+                rxJava    : "1.2.9"]
+
+ext.deps = [supportAppCompat: "com.android.support:appcompat-v7:${ext.versions.supportLib}",
+            supportDesign   : "com.android.support:design:${ext.versions.supportLib}",
+            supportCardView : "com.android.support:cardview-v7:${ext.versions.supportLib}",
+            supportPalette  : "com.android.support:palette-v7:${ext.versions.supportLib}",
+
+            // Base
+            kotlinStdLib    : "org.jetbrains.kotlin:kotlin-stdlib:${ext.versions.kotlin}",
+
+            dagger          : 'com.google.dagger:dagger:2.10',
+            daggerCompiler  : 'com.google.dagger:dagger-compiler:2.10',
+            javax           : 'org.glassfish:javax.annotation:10.0-b28',
+
+            retrofit        : "com.squareup.retrofit2:retrofit:$ext.versions.retrofit",
+            retrofitRxJava  : "com.squareup.retrofit2:adapter-rxjava:$ext.versions.retrofit",
+            retrofitGson    : "com.squareup.retrofit2:converter-gson:$ext.versions.retrofit",
+            okHttp          : "com.squareup.okhttp3:okhttp:$ext.versions.okhttp3",
+            okHttpLogging   : "com.squareup.okhttp3:logging-interceptor:$ext.versions.okhttp3",
+
+            rxAndroid       : 'io.reactivex:rxandroid:1.2.1',
+            rxJava          : "io.reactivex:rxjava:${ext.versions.rxJava}",
+            rxJavaProguard  : "com.artemzin.rxjava:proguard-rules:${ext.versions.rxJava}.0@aar",
+
+            // Features
+            picasso         : 'com.squareup.picasso:picasso:2.5.2',
+            picassoPalette  : 'com.github.florent37:picassopalette:1.0.2@aar',
+
+            timber          : 'com.jakewharton.timber:timber:4.1.2@aar',
+            crashlytics     : 'com.crashlytics.sdk.android:crashlytics:2.6.7@aar',
+
+            kotlinTest      : "org.jetbrains.kotlin:kotlin-test:${ext.versions.kotlin}",
+            junit           : 'junit:junit:4.12',
+            mockitoCore     : "org.mockito:mockito-core:1.10.19",
+            assertJAndroid  : 'com.squareup.assertj:assertj-android:1.1.1']
+
+ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.14.0',
+             kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.versions.kotlin",
+             kotlinExtensions: "org.jetbrains.kotlin:kotlin-android-extensions:$ext.versions.kotlin",
+             fabric          : 'io.fabric.tools:gradle:1.22.1',
+             gradleScan      : "com.gradle:build-scan-plugin:1.6"]
