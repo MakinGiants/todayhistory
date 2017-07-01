@@ -7,6 +7,7 @@ import com.makingiants.todayhistory.api.MockHistory.events
 import com.makingiants.todayhistory.api.error_handling.MockApiException.apiException
 import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +15,6 @@ import org.junit.AfterClass
 import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import org.mockito.Matchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
@@ -247,8 +247,8 @@ class TodayPresenterTests {
     // Progress is showed by pull to refresh mView automatically
     verify(view).showReloadProgress()
     verify(view, times(2)).dismissReloadProgress()
-    verify(view).showErrorToast(anyString())
-    verify(view, times(0)).showErrorView(anyString(), anyString())
+    verify(view).showErrorToast(any<String>())
+    verify(view, times(0)).showErrorView(any<String>(), any<String>())
     verify(view, times(0)).hideEvents()
   }
 
@@ -267,7 +267,7 @@ class TodayPresenterTests {
 
     presenter.onRefresh()
 
-    verify(view).showErrorToast(anyString())
+    verify(view).showErrorToast(any<String>())
     verify(view).showReloadProgress()
     verify(view, times(2)).dismissReloadProgress()
     verify(view, times(0)).showEmptyView()
