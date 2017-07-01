@@ -9,17 +9,17 @@ buildscript {
     classpath plugs.gradleVersions
     classpath plugs.kotlin
     classpath plugs.kotlinExtensions
-    classpath 'io.fabric.tools:gradle:1.21.7'
+    classpath 'io.fabric.tools:gradle:1.22.2'
   }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'com.github.ben-manes.versions'
 apply plugin: 'io.fabric'
 apply from: 'jacoco.gradle'
-apply plugin: 'com.neenbedankt.android-apt' // Dagger
 
 def appId = "com.makingiants.todayhistory"
 def appVersionName = "0.1.0"
@@ -77,8 +77,7 @@ android {
   // Kotlin
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
-    prod.java.srcDirs += 'src/prod/kotlin'
-    mocked.java.srcDirs += 'src/mocked/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
   }
 }
 
@@ -86,9 +85,8 @@ repositories {
   maven { url 'https://maven.fabric.io/public' }
 }
 
-kapt {
-  generateStubs = true
-}
+// Dagger
+kapt.generateStubs = true
 
 dependencies {
   compile deps.supportAppCompat
@@ -98,8 +96,8 @@ dependencies {
   compile deps.kotlinStdLib
   compile project(':api')
 
-  compile 'com.google.dagger:dagger:2.0.2'
-  kapt 'com.google.dagger:dagger-compiler:2.0.2'
+  compile 'com.google.dagger:dagger:2.11'
+  kapt 'com.google.dagger:dagger-compiler:2.11'
   provided 'org.glassfish:javax.annotation:10.0-b28'
 
   // Features
@@ -107,12 +105,16 @@ dependencies {
   compile 'com.github.florent37:picassopalette:1.0.2@aar'
 
   // Management
-  compile 'com.jakewharton.timber:timber:4.1.2@aar'
-  compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') { transitive = true; }
+  compile 'com.jakewharton.timber:timber:4.5.1@aar'
+  compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
 
   testCompile deps.kotlinTest
   testCompile 'junit:junit:4.12'
   testCompile "org.mockito:mockito-core:1.10.19"
+  testCompile("com.nhaarman:mockito-kotlin:1.4.0") {
+    exclude group: "org.jetbrains.kotlin", module: 'kotlin-stdlib'
+    exclude group: "org.jetbrains.kotlin", module: 'kotlin-reflect'
+  }
   testCompile('com.squareup.assertj:assertj-android:1.1.1') {
     exclude group: 'com.android.support', module: 'support-annotations'
   }

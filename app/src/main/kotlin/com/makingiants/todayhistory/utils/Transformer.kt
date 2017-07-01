@@ -1,8 +1,9 @@
 package com.makingiants.todayhistory.utils
 
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import io.reactivex.ObservableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
 
 /**
  * Transforms to avoid setting each Schedulers on each call.
@@ -11,7 +12,9 @@ import rx.schedulers.Schedulers
  * observable.compose(applyIoSchedulers())
  */
 object Transformer {
-  fun <T> applyIoSchedulers(): Observable.Transformer<T, T> = Observable.Transformer<T, T> {
+
+  fun <T> applyIoSchedulers() = ObservableTransformer<T, T> {
     it.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
   }
+
 }
