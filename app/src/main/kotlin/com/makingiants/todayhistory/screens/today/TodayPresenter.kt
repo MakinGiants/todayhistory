@@ -7,18 +7,17 @@ import com.makingiants.today.api.repository.history.pojo.Event
 import com.makingiants.todayhistory.utils.DateManager
 import com.makingiants.todayhistory.utils.NetworkChecker
 import com.makingiants.todayhistory.utils.Transformer
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.disposables.CompositeDisposable
 
 open class TodayPresenter(var dateManager: DateManager,
                           val historyRepository: HistoryRepository,
                           val networkChecker: NetworkChecker) {
-  @VisibleForTesting var compositeSubscription: CompositeSubscription? = null
+  @VisibleForTesting val compositeDisposable = CompositeDisposable()
   @VisibleForTesting var view: TodayView? = null
   private var events: List<Event>? = null
 
   fun attach(view: TodayView) {
     this.view = view
-    compositeSubscription = CompositeSubscription()
 
     view.initViews()
     if (events == null) {
@@ -30,10 +29,7 @@ open class TodayPresenter(var dateManager: DateManager,
 
   fun unAttach() {
     view = null
-
-    if (compositeSubscription?.hasSubscriptions() ?: false) {
-      compositeSubscription?.unsubscribe()
-    }
+//    compositeDisposable.clear()
   }
 
   fun onRefresh() = loadEvents()
@@ -63,7 +59,6 @@ open class TodayPresenter(var dateManager: DateManager,
             if (this.events == null) {
               view?.showEmptyView()
             } else {
-              // TODO: move the string to strings and show from view
               view?.showErrorToast("The loaded list is empty, retry latter.")
             }
           } else {
@@ -89,6 +84,6 @@ open class TodayPresenter(var dateManager: DateManager,
           }
         })
 
-    compositeSubscription?.add(subscription)
+    compositeDisposable.add(subscription)
   }
 }

@@ -47,8 +47,8 @@ android {
   }
 }
 
-ext.libDeps = [retrofit: "2.1.0",
-               okhttp3 : "3.4.1"]
+ext.libDeps = [retrofit: "2.3.0",
+               okhttp3 : "3.8.1"]
 
 repositories {
   jcenter()
@@ -60,13 +60,12 @@ dependencies {
 
   // Base
   compile "com.squareup.retrofit2:retrofit:$libDeps.retrofit"
-  compile "com.squareup.retrofit2:adapter-rxjava:$libDeps.retrofit"
+  compile "com.squareup.retrofit2:adapter-rxjava2:$libDeps.retrofit"
   compile "com.squareup.retrofit2:converter-gson:$libDeps.retrofit"
   compile "com.squareup.okhttp3:okhttp:$libDeps.okhttp3"
   compile "com.squareup.okhttp3:logging-interceptor:$libDeps.okhttp3"
 
   // Features
-  compile 'io.reactivex:rxandroid:1.2.1'
-  compile 'io.reactivex:rxjava:1.1.8'
-  compile 'com.artemzin.rxjava:proguard-rules:1.1.8.0@aar'
+  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  compile 'io.reactivex.rxjava2:rxjava:2.1.1'
 }

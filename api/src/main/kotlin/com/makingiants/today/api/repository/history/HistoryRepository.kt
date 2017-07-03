@@ -2,7 +2,7 @@ package com.makingiants.today.api.repository.history
 
 import com.makingiants.today.api.Api
 import com.makingiants.today.api.repository.history.pojo.Event
-import rx.Observable
+import io.reactivex.Observable
 
 open class HistoryRepository() {
   private val mHistoryService = Api.create(HistoryService::class.java)

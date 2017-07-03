@@ -1,12 +1,12 @@
 buildscript {
-  ext.versions = [kotlin    : "1.0.3",
-                  supportLib: "24.1.1"]
+  ext.versions = [kotlin    : "1.1.3",
+                  supportLib: "25.4.0"]
 
-  ext.setup = [targetSdk : 24,
+  ext.setup = [targetSdk : 25,
                minSdk    : 15,
-               buildTools: "24.0.1"]
+               buildTools: "25.0.3"]
 
-  ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.13.0',
+  ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
                kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.versions.kotlin",
                kotlinExtensions: "org.jetbrains.kotlin:kotlin-android-extensions:$ext.versions.kotlin"]
 
@@ -21,14 +21,14 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.1.2'
-    classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // Dagger
+    classpath 'com.android.tools.build:gradle:2.2.0'
   }
 }
 
 allprojects {
   repositories {
     jcenter()
+    maven { url "https://maven.google.com" }
   }
 }
 
