@@ -1,27 +1,18 @@
 buildscript {
-  ext.versions = [kotlin    : "1.1.3",
-                  supportLib: "25.4.0"]
-
-  ext.setup = [targetSdk : 25,
-               minSdk    : 15,
-               buildTools: "25.0.3"]
-
-  ext.plugs = [gradleVersions  : 'com.github.ben-manes:gradle-versions-plugin:0.15.0',
-               kotlin          : "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.versions.kotlin",
-               kotlinExtensions: "org.jetbrains.kotlin:kotlin-android-extensions:$ext.versions.kotlin"]
-
-  ext.deps = [supportAppCompat: "com.android.support:appcompat-v7:${ext.versions.supportLib}",
-              supportDesign   : "com.android.support:design:${ext.versions.supportLib}",
-              supportCardView : "com.android.support:cardview-v7:${ext.versions.supportLib}",
-              supportPalette  : "com.android.support:palette-v7:${ext.versions.supportLib}",
-              kotlinStdLib    : "org.jetbrains.kotlin:kotlin-stdlib:${ext.versions.kotlin}",
-              kotlinTest      : "org.jetbrains.kotlin:kotlin-test:${ext.versions.kotlin}"]
+  apply from: "dependencies.gradle"
 
   repositories {
     jcenter()
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.2.0'
+
+    classpath plugs.gradleVersions
+    classpath plugs.kotlin
+    classpath plugs.kotlinExtensions
+    classpath 'io.fabric.tools:gradle:1.24.2'
   }
 }
 
