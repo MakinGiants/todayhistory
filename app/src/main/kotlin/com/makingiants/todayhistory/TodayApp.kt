@@ -43,7 +43,6 @@ class TodayApp : Application() {
           put("AppVersion", BuildConfig.VERSION_NAME)
           put("BuildNumber", BuildConfig.VERSION_CODE.toString())
           put("AndroidVersion", Build.VERSION.RELEASE)
-          put("GitSHA", BuildConfig.GIT_SHA)
           put("Manufacturer", Build.MANUFACTURER)
           put("Model", Build.MODEL)
         }
