@@ -5,7 +5,7 @@ Today History Android app
 + Develop: [![Build Status](https://travis-ci.org/MakinGiants/todayhistory.svg?branch=develop)](https://travis-ci.org/MakinGiants/todayhistory)
 + Code Coverage: [![codecov.io](https://codecov.io/github/MakinGiants/todayhistory/coverage.svg?branch=develop)](https://codecov.io/github/MakinGiants/todayhistory?branch=develop)
 
-App that shows what happened today in history.
+Sample App that shows what happened today in history.
 
 ![sample](img/1.png)
 ![sample](img/2.png)
